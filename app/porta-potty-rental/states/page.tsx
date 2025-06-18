@@ -382,7 +382,7 @@ export default function StatesPage() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/images/blue-porta-potties-background.jpg'), linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)`,
+          backgroundImage: `url('/images/blue-porta-potties-background.jpg'), linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)`,
         }}
       />
 
