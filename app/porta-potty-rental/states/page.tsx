@@ -404,7 +404,7 @@ export default function StatesPage() {
                 >
                   {/* Flag Background */}
                   <div
-                    className="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-90 transition-opacity duration-300"
+                    className="absolute inset-0 bg-cover bg-center opacity-40 transition-opacity duration-300"
                     style={{
                       backgroundImage: `url(${state.flagUrl})`,
                       backgroundSize: "cover",
@@ -417,11 +417,14 @@ export default function StatesPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-white/70 to-white/55 group-hover:from-white/75 group-hover:via-white/60 group-hover:to-white/45 transition-all duration-300" />
 
                   {/* Content */}
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-3">
+                  <div className="relative z-10 text-center">
+                    <div className="flex items-center justify-center mb-3">
                       <h3 className="text-lg font-bold text-secondary-900 group-hover:text-primary-600 transition-colors duration-200 text-shadow-soft">
                         {state.name}
                       </h3>
+                    </div>
+
+                    <div className="flex items-center justify-center mb-3">
                       <div className="gradient-primary p-2 rounded-lg shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
                         <MapPin className="h-4 w-4 text-white" />
                       </div>
@@ -431,7 +434,7 @@ export default function StatesPage() {
                       {state.vendorCount} porta potty rental compan{state.vendorCount !== 1 ? "ies" : "y"} available
                     </p>
 
-                    <div className="flex items-center text-primary-600 text-sm font-bold group-hover:text-primary-700 transition-colors duration-200">
+                    <div className="flex items-center justify-center text-primary-600 text-sm font-bold group-hover:text-primary-700 transition-colors duration-200">
                       <span>View {state.name} Porta Potty Rental</span>
                       <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                     </div>
