@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 const featuredVendors = [
   {
     id: "1",
-    name: "Miami Premium Porta Potty Rental",
+    name: "Miami Porta Potty Rental",
     city: "Miami",
     state: "FL",
     features: {
@@ -48,7 +48,7 @@ const featuredVendors = [
   },
   {
     id: "2",
-    name: "Austin Event Porta Potty Rental",
+    name: "Austin Porta Potty Rental",
     city: "Austin",
     state: "TX",
     features: {
@@ -64,7 +64,7 @@ const featuredVendors = [
   },
   {
     id: "3",
-    name: "Denver Construction Porta Potty Rental",
+    name: "Denver Porta Potty Rental",
     city: "Denver",
     state: "CO",
     features: {
