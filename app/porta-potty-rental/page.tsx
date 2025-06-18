@@ -4,7 +4,7 @@ import SearchBar from "@/components/search-bar"
 import VendorCard from "@/components/vendor-card"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
-import { PortaPottyLogo } from "@/components/icons/porta-potty-logo"
+import PortaPottyLogo from "@/components/porta-potty-logo"
 
 export const metadata: Metadata = {
   title: "Best Porta Potty Rental Directory - Find Local Portable Restroom Rentals",
@@ -543,7 +543,7 @@ export default function HomePage() {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
               backgroundSize: "60px 60px",
             }}
           ></div>
