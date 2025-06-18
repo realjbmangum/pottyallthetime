@@ -414,7 +414,7 @@ export default function StatesPage() {
               >
                 {/* Flag Background */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-300"
+                  className="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-90 transition-opacity duration-300"
                   style={{
                     backgroundImage: `url(${state.flagUrl})`,
                     backgroundSize: "cover",
@@ -424,7 +424,7 @@ export default function StatesPage() {
                 />
 
                 {/* Enhanced Gradient Overlay for better text readability */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-white/70 to-white/55" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-white/70 to-white/55 group-hover:from-white/75 group-hover:via-white/60 group-hover:to-white/45 transition-all duration-300" />
 
                 {/* Content */}
                 <div className="relative z-10">
