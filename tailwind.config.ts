@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss"
 import defaultConfig from "shadcn/ui/tailwind.config"
 
 const config: Config = {
-  ...defaultConfig,
+  darkMode: defaultConfig.darkMode,
   content: [
     ...defaultConfig.content,
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -89,8 +89,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Poppins", "Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        display: ["var(--font-poppins)", "var(--font-inter)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
