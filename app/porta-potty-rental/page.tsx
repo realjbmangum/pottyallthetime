@@ -1,8 +1,7 @@
 import Link from "next/link"
-import { ArrowRight, Star, Users, Shield, CheckCircle } from "lucide-react"
+import { ArrowRight, Star, Users, Shield, CheckCircle, Sparkles, Award, Clock } from "lucide-react"
 import SearchBar from "@/components/search-bar"
 import VendorCard from "@/components/vendor-card"
-import VideoBackground from "@/components/video-background"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 
@@ -81,72 +80,85 @@ const featuredVendors = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section with Video Background - Mobile First */}
-      <section className="relative overflow-hidden min-h-screen flex items-center">
-        {/* Video Background with Parallax */}
-        <VideoBackground
-          videoUrl="/videos/waterfall-background.mp4"
-          parallax={true}
-          overlay={true}
-          className="scale-110"
-        />
+    <div className="min-h-screen bg-background">
+      {/* Modern Hero Section with Gradient Background */}
+      <section className="relative overflow-hidden">
+        {/* Gradient Background */}
+        <div className="absolute inset-0 gradient-hero" />
 
-        {/* Dark overlay for better text visibility */}
-        <div className="absolute inset-0 bg-black/40 z-5"></div>
+        {/* Subtle Pattern Overlay */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23000000' fillOpacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
+        </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
-          <div className="text-center">
-            <h1 className="heading-xl text-white mb-4 sm:mb-6">
-              <span className="block text-white drop-shadow-2xl">Find A</span>
-              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-400 bg-clip-text text-transparent drop-shadow-2xl stroke-white stroke-2 paint-order-stroke">
-                PORTA POTTY
-              </span>
-              <span className="block text-white drop-shadow-2xl">Near You</span>
-            </h1>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-24 sm:pb-32 lg:pt-32 lg:pb-40">
+          <div className="text-center space-y-8 sm:space-y-12">
+            {/* Main Heading */}
+            <div className="space-y-4 sm:space-y-6">
+              <h1 className="heading-hero text-gray-900">
+                <span className="block text-shadow-soft">Find A</span>
+                <span className="block bg-gradient-to-r from-accent-400 via-accent-500 to-accent-600 bg-clip-text text-transparent text-shadow-soft">
+                  PORTA POTTY
+                </span>
+                <span className="block text-shadow-soft">Near You</span>
+              </h1>
 
-            <p className="text-base sm:text-lg lg:text-xl text-white mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg font-medium">
-              Compare prices, features, and book reliable porta potty rental services for your events, construction
-              sites, and outdoor gatherings. Trusted portable restroom rental directory with verified vendors
-              nationwide.
-            </p>
-
-            {/* Search Bar - Mobile Optimized with Glass Effect */}
-            <div className="flex justify-center mb-8 sm:mb-12">
-              <div className="w-full max-w-2xl">
-                <div className="glass-effect-dark rounded-2xl p-2 shadow-modern-lg backdrop-blur-md border border-white/30">
-                  <SearchBar placeholder="Enter your city or state for porta potty rental..." />
-                </div>
+              <div className="max-w-4xl mx-auto">
+                <p className="body-lg text-gray-600 font-medium">
+                  Compare prices, features, and book reliable porta potty rental services for your events, construction
+                  sites, and outdoor gatherings. Trusted portable restroom rental directory with verified vendors
+                  nationwide.
+                </p>
               </div>
             </div>
 
-            {/* Trust Indicators - Mobile Responsive with Glass Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-              <div className="glass-effect-dark rounded-xl p-4 shadow-modern backdrop-blur-md border border-white/20">
-                <div className="flex items-center justify-center space-x-2 text-white">
-                  <Star className="h-5 w-5 text-yellow-400 flex-shrink-0" />
-                  <span className="text-sm sm:text-base font-semibold">10,000+ Happy Customers</span>
-                </div>
-              </div>
-              <div className="glass-effect-dark rounded-xl p-4 shadow-modern backdrop-blur-md border border-white/20">
-                <div className="flex items-center justify-center space-x-2 text-white">
-                  <Users className="h-5 w-5 text-blue-300 flex-shrink-0" />
-                  <span className="text-sm sm:text-base font-semibold">500+ Verified Vendors</span>
-                </div>
-              </div>
-              <div className="glass-effect-dark rounded-xl p-4 shadow-modern backdrop-blur-md border border-white/20">
-                <div className="flex items-center justify-center space-x-2 text-white">
-                  <Shield className="h-5 w-5 text-green-400 flex-shrink-0" />
-                  <span className="text-sm sm:text-base font-semibold">Fully Insured Rentals</span>
-                </div>
-              </div>
+            {/* Modern Search Bar */}
+            <div className="flex justify-center px-4">
+              <SearchBar placeholder="Enter your city or state for porta potty rental..." />
             </div>
 
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-              <div className="w-6 h-10 border-2 border-white/70 rounded-full flex justify-center">
-                <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+            {/* Trust Indicators with Modern Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto px-4">
+              <div className="card-feature group">
+                <div className="flex items-center justify-center space-x-3 text-gray-900">
+                  <div className="p-2 bg-accent-100 rounded-xl group-hover:bg-accent-200 transition-colors duration-200">
+                    <Star className="h-6 w-6 text-accent-600" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-lg">10,000+</div>
+                    <div className="text-sm text-gray-600">Happy Customers</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card-feature group">
+                <div className="flex items-center justify-center space-x-3 text-gray-900">
+                  <div className="p-2 bg-primary-100 rounded-xl group-hover:bg-primary-200 transition-colors duration-200">
+                    <Users className="h-6 w-6 text-primary-600" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-lg">500+</div>
+                    <div className="text-sm text-gray-600">Verified Vendors</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card-feature group">
+                <div className="flex items-center justify-center space-x-3 text-gray-900">
+                  <div className="p-2 bg-green-100 rounded-xl group-hover:bg-green-200 transition-colors duration-200">
+                    <Shield className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-lg">100%</div>
+                    <div className="text-sm text-gray-600">Insured Rentals</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -154,24 +166,28 @@ export default function HomePage() {
       </section>
 
       {/* Featured Porta Potty Rental Companies */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white relative z-20">
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="heading-lg text-secondary-900 mb-4">Featured Porta Potty Rental Companies</h2>
-            <p className="text-base sm:text-lg text-secondary-600 max-w-3xl mx-auto">
-              Top-rated porta potty rental companies in popular locations. Compare features, prices, and book your
-              portable restroom rental today.
+          <div className="text-center mb-12 sm:mb-16 space-y-4">
+            <div className="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-semibold">
+              <Sparkles className="h-4 w-4 mr-2" />
+              Featured Companies
+            </div>
+            <h2 className="heading-lg text-gray-900">Top-Rated Porta Potty Rental Companies</h2>
+            <p className="body-md text-gray-600 max-w-3xl mx-auto">
+              Discover trusted porta potty rental companies in popular locations. Compare features, prices, and book
+              your portable restroom rental today.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-8 sm:mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
             {featuredVendors.map((vendor) => (
               <VendorCard key={vendor.id} vendor={vendor} />
             ))}
           </div>
 
           <div className="text-center">
-            <Button asChild size="lg" className="gradient-primary hover:shadow-modern-lg transition-all duration-300">
+            <Button asChild className="btn-primary text-lg px-8 py-4">
               <Link href="/porta-potty-rental/states">
                 Browse All States for Porta Potty Rental
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -181,50 +197,56 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How Porta Potty Rental Works */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-secondary-50 to-primary-50 relative z-20">
+      {/* How It Works Section */}
+      <section className="py-16 sm:py-20 lg:py-24 gradient-soft">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="heading-lg text-secondary-900 mb-4">How Porta Potty Rental Works</h2>
-            <p className="text-base sm:text-lg text-secondary-600 max-w-3xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16 space-y-4">
+            <div className="inline-flex items-center px-4 py-2 bg-accent-50 text-accent-700 rounded-full text-sm font-semibold">
+              <Clock className="h-4 w-4 mr-2" />
+              Simple Process
+            </div>
+            <h2 className="heading-lg text-gray-900">How Porta Potty Rental Works</h2>
+            <p className="body-md text-gray-600 max-w-3xl mx-auto">
               Find and book porta potty rental services in three simple steps
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             <div className="text-center group">
-              <div className="glass-effect rounded-2xl p-6 sm:p-8 shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
-                <div className="gradient-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-modern">
-                  <span className="text-2xl font-bold text-white">1</span>
+              <div className="card-modern p-8 sm:p-10 hover:scale-105 transition-all duration-300">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300">
+                  1
                 </div>
-                <h3 className="heading-sm text-secondary-900 mb-3">Search Your Area</h3>
-                <p className="text-secondary-600 leading-relaxed">
+                <h3 className="heading-sm text-gray-900 mb-4">Search Your Area</h3>
+                <p className="text-gray-600 leading-relaxed">
                   Enter your city or state to find available porta potty rental companies near you with competitive
-                  pricing.
+                  pricing and verified reviews.
                 </p>
               </div>
             </div>
 
             <div className="text-center group">
-              <div className="glass-effect rounded-2xl p-6 sm:p-8 shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
-                <div className="gradient-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-modern">
-                  <span className="text-2xl font-bold text-white">2</span>
+              <div className="card-modern p-8 sm:p-10 hover:scale-105 transition-all duration-300">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-accent-400 to-accent-500 text-gray-900 rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300">
+                  2
                 </div>
-                <h3 className="heading-sm text-secondary-900 mb-3">Compare Porta Potty Rental Options</h3>
-                <p className="text-secondary-600 leading-relaxed">
-                  Review features, prices, and ratings to find the perfect porta potty rental for your specific needs.
+                <h3 className="heading-sm text-gray-900 mb-4">Compare Options</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Review features, prices, and ratings to find the perfect porta potty rental for your specific needs
+                  and budget requirements.
                 </p>
               </div>
             </div>
 
             <div className="text-center group">
-              <div className="glass-effect rounded-2xl p-6 sm:p-8 shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
-                <div className="gradient-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-modern">
-                  <span className="text-2xl font-bold text-white">3</span>
+              <div className="card-modern p-8 sm:p-10 hover:scale-105 transition-all duration-300">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300">
+                  3
                 </div>
-                <h3 className="heading-sm text-secondary-900 mb-3">Book & Enjoy</h3>
-                <p className="text-secondary-600 leading-relaxed">
-                  Contact your chosen porta potty rental company directly to book and arrange delivery for your event.
+                <h3 className="heading-sm text-gray-900 mb-4">Book & Enjoy</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Contact your chosen porta potty rental company directly to book and arrange delivery for your event or
+                  project.
                 </p>
               </div>
             </div>
@@ -232,43 +254,55 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Our Porta Potty Rental Directory */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white relative z-20">
+      {/* Why Choose Us Section */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div>
-              <h2 className="heading-lg text-secondary-900 mb-6">Why Choose Our Porta Potty Rental Directory?</h2>
-              <p className="text-base sm:text-lg text-secondary-600 mb-6 sm:mb-8 leading-relaxed">
-                We connect you with the most reliable porta potty rental companies in your area, ensuring you get the
-                best service for your portable restroom needs.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <div className="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-semibold">
+                  <Award className="h-4 w-4 mr-2" />
+                  Why Choose Us
+                </div>
+                <h2 className="heading-lg text-gray-900">Why Choose Our Porta Potty Rental Directory?</h2>
+                <p className="body-md text-gray-600">
+                  We connect you with the most reliable porta potty rental companies in your area, ensuring you get the
+                  best service for your portable restroom needs.
+                </p>
+              </div>
 
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-success-600 mt-1 flex-shrink-0" />
+                  <div className="flex-shrink-0 p-2 bg-green-100 rounded-xl">
+                    <CheckCircle className="h-6 w-6 text-green-600" />
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900 mb-1">Verified Porta Potty Rental Companies</h3>
-                    <p className="text-secondary-600">
-                      All porta potty rental vendors are thoroughly vetted and insured for your peace of mind.
+                    <h3 className="font-semibold text-gray-900 mb-2">Verified Porta Potty Rental Companies</h3>
+                    <p className="text-gray-600">
+                      All porta potty rental vendors are thoroughly vetted and insured for your complete peace of mind.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-success-600 mt-1 flex-shrink-0" />
+                  <div className="flex-shrink-0 p-2 bg-primary-100 rounded-xl">
+                    <CheckCircle className="h-6 w-6 text-primary-600" />
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900 mb-1">Best Porta Potty Rental Prices</h3>
-                    <p className="text-secondary-600">
+                    <h3 className="font-semibold text-gray-900 mb-2">Best Porta Potty Rental Prices</h3>
+                    <p className="text-gray-600">
                       Compare competitive pricing from multiple porta potty rental companies in your area.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-success-600 mt-1 flex-shrink-0" />
+                  <div className="flex-shrink-0 p-2 bg-accent-100 rounded-xl">
+                    <CheckCircle className="h-6 w-6 text-accent-600" />
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900 mb-1">Quality Porta Potty Rental Service</h3>
-                    <p className="text-secondary-600">
+                    <h3 className="font-semibold text-gray-900 mb-2">Quality Porta Potty Rental Service</h3>
+                    <p className="text-gray-600">
                       We maintain high standards to ensure you get clean, reliable portable restrooms every time.
                     </p>
                   </div>
@@ -277,23 +311,23 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="glass-effect rounded-2xl p-6 sm:p-8 shadow-modern-lg">
-                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              <div className="card-modern p-8 sm:p-10 bg-gradient-to-br from-gray-50 to-white">
+                <div className="grid grid-cols-2 gap-6 sm:gap-8">
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-600 mb-2">500+</div>
-                    <div className="text-sm sm:text-base text-secondary-600">Porta Potty Rental Companies</div>
+                    <div className="text-3xl sm:text-4xl font-bold text-primary-600 mb-2">500+</div>
+                    <div className="text-sm sm:text-base text-gray-600">Porta Potty Companies</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-600 mb-2">10K+</div>
-                    <div className="text-sm sm:text-base text-secondary-600">Satisfied Customers</div>
+                    <div className="text-3xl sm:text-4xl font-bold text-accent-600 mb-2">10K+</div>
+                    <div className="text-sm sm:text-base text-gray-600">Satisfied Customers</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-600 mb-2">50</div>
-                    <div className="text-sm sm:text-base text-secondary-600">States Covered</div>
+                    <div className="text-3xl sm:text-4xl font-bold text-green-600 mb-2">50</div>
+                    <div className="text-sm sm:text-base text-gray-600">States Covered</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-600 mb-2">4.8★</div>
-                    <div className="text-sm sm:text-base text-secondary-600">Average Rating</div>
+                    <div className="text-3xl sm:text-4xl font-bold text-purple-600 mb-2">4.8★</div>
+                    <div className="text-sm sm:text-base text-gray-600">Average Rating</div>
                   </div>
                 </div>
               </div>
@@ -302,19 +336,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section for Porta Potty Rental Business */}
-      <section className="py-12 sm:py-16 lg:py-20 gradient-primary relative overflow-hidden z-20">
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 lg:py-24 gradient-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="heading-lg text-white mb-4 sm:mb-6">Ready to List Your Porta Potty Rental Business?</h2>
-          <p className="text-lg sm:text-xl text-primary-100 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
-            Join hundreds of porta potty rental companies already growing their business with our directory. Get more
-            customers and increase your porta potty rental bookings.
-          </p>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+          <div className="space-y-4">
+            <h2 className="heading-lg text-white">Ready to List Your Porta Potty Rental Business?</h2>
+            <p className="body-lg text-blue-100 max-w-3xl mx-auto">
+              Join hundreds of porta potty rental companies already growing their business with our directory. Get more
+              customers and increase your porta potty rental bookings.
+            </p>
+          </div>
           <Button
             asChild
-            size="lg"
-            className="bg-white text-primary-600 hover:bg-primary-50 shadow-modern hover:shadow-modern-lg transition-all duration-300"
+            className="bg-white text-primary-600 hover:bg-gray-50 text-lg px-8 py-4 rounded-xl font-semibold shadow-modern-lg hover:shadow-modern-xl hover:scale-105 transition-all duration-200"
           >
             <Link href="/porta-potty-rental/add-business">
               List Your Porta Potty Rental Business
