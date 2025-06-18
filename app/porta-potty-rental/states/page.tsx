@@ -378,11 +378,11 @@ const states = [
 export default function StatesPage() {
   return (
     <div className="min-h-screen relative">
-      {/* Background Image */}
+      {/* Background Image with Fallback */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/blue-porta-potties-background.jpg')",
+          backgroundImage: `url('/images/blue-porta-potties-background.jpg'), linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)`,
         }}
       />
 
