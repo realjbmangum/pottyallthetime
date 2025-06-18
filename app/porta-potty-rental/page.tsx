@@ -187,7 +187,10 @@ export default function HomePage() {
           </div>
 
           <div className="text-center">
-            <Button asChild className="btn-primary text-lg px-8 py-4">
+            <Button
+              asChild
+              className="bg-primary-500 hover:bg-primary-600 text-white text-lg px-8 py-4 rounded-xl font-semibold shadow-modern hover:shadow-modern-lg hover:scale-105 active:scale-95 transition-all duration-200"
+            >
               <Link href="/porta-potty-rental/states">
                 Browse All States for Porta Potty Rental
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -214,7 +217,10 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             <div className="text-center group">
               <div className="card-modern p-8 sm:p-10 hover:scale-105 transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300">
+                <div
+                  className="inline-flex items-center justify-center w-16 h-16 text-white rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300"
+                  style={{ background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)" }}
+                >
                   1
                 </div>
                 <h3 className="heading-sm text-gray-900 mb-4">Search Your Area</h3>
@@ -227,7 +233,10 @@ export default function HomePage() {
 
             <div className="text-center group">
               <div className="card-modern p-8 sm:p-10 hover:scale-105 transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-accent-400 to-accent-500 text-gray-900 rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300">
+                <div
+                  className="inline-flex items-center justify-center w-16 h-16 text-gray-900 rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300"
+                  style={{ background: "linear-gradient(135deg, #facc15 0%, #eab308 100%)" }}
+                >
                   2
                 </div>
                 <h3 className="heading-sm text-gray-900 mb-4">Compare Options</h3>
@@ -240,7 +249,10 @@ export default function HomePage() {
 
             <div className="text-center group">
               <div className="card-modern p-8 sm:p-10 hover:scale-105 transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300">
+                <div
+                  className="inline-flex items-center justify-center w-16 h-16 text-white rounded-2xl font-bold text-2xl mb-6 shadow-modern-lg group-hover:shadow-modern-xl transition-all duration-300"
+                  style={{ background: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)" }}
+                >
                   3
                 </div>
                 <h3 className="heading-sm text-gray-900 mb-4">Book & Enjoy</h3>
