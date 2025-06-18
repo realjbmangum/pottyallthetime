@@ -4,6 +4,7 @@ import SearchBar from "@/components/search-bar"
 import VendorCard from "@/components/vendor-card"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
+import { PortaPottyLogo } from "@/components/icons/porta-potty-logo"
 
 export const metadata: Metadata = {
   title: "Best Porta Potty Rental Directory - Find Local Portable Restroom Rentals",
@@ -86,6 +87,27 @@ export default function HomePage() {
         {/* Gradient Background */}
         <div className="absolute inset-0 gradient-hero" />
 
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Floating Porta Potty Icons */}
+          <div className="absolute top-20 left-10 opacity-10">
+            <PortaPottyLogo size="xl" className="text-primary-300" />
+          </div>
+          <div className="absolute top-40 right-20 opacity-10">
+            <PortaPottyLogo size="lg" className="text-accent-300" />
+          </div>
+          <div className="absolute bottom-20 left-20 opacity-10">
+            <PortaPottyLogo size="md" className="text-primary-200" />
+          </div>
+          <div className="absolute bottom-40 right-10 opacity-10">
+            <PortaPottyLogo size="lg" className="text-accent-200" />
+          </div>
+
+          {/* Geometric Shapes */}
+          <div className="absolute top-32 right-1/4 w-32 h-32 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full opacity-20 blur-xl"></div>
+          <div className="absolute bottom-32 left-1/4 w-24 h-24 bg-gradient-to-br from-accent-100 to-accent-200 rounded-full opacity-20 blur-xl"></div>
+        </div>
+
         {/* Subtle Pattern Overlay */}
         <div className="absolute inset-0 opacity-5">
           <div
@@ -158,6 +180,79 @@ export default function HomePage() {
                     <div className="font-bold text-lg">100%</div>
                     <div className="text-sm text-gray-600">Insured Rentals</div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Hero Illustration */}
+            <div className="mt-12 sm:mt-16 relative">
+              <div className="relative max-w-4xl mx-auto">
+                {/* Main Hero Graphic */}
+                <div className="relative bg-gradient-to-br from-primary-100 via-white to-accent-100 rounded-3xl p-8 sm:p-12 shadow-modern-xl">
+                  {/* Porta Potty Illustration */}
+                  <div className="flex items-center justify-center space-x-8">
+                    {/* Standard Unit */}
+                    <div className="text-center group">
+                      <div className="w-20 h-24 bg-primary-500 rounded-lg shadow-modern mb-3 relative overflow-hidden group-hover:scale-105 transition-transform duration-200">
+                        <div className="absolute top-2 left-2 w-3 h-3 bg-white rounded-full opacity-80"></div>
+                        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-primary-700 rounded"></div>
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-8 bg-primary-400 rounded opacity-50"></div>
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">Standard</span>
+                    </div>
+
+                    {/* Arrow */}
+                    <div className="text-primary-500">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+
+                    {/* Luxury Unit */}
+                    <div className="text-center group">
+                      <div className="w-20 h-24 bg-gradient-to-b from-accent-400 to-accent-500 rounded-lg shadow-modern-lg mb-3 relative overflow-hidden group-hover:scale-105 transition-transform duration-200">
+                        <div className="absolute top-2 left-2 w-3 h-3 bg-white rounded-full"></div>
+                        <div className="absolute top-2 right-2 w-2 h-2 bg-yellow-300 rounded-full"></div>
+                        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-1 bg-accent-700 rounded"></div>
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-10 bg-accent-300 rounded opacity-60"></div>
+                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-6 h-2 bg-blue-200 rounded opacity-80"></div>
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">Luxury</span>
+                    </div>
+
+                    {/* Arrow */}
+                    <div className="text-primary-500">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+
+                    {/* Happy Customer */}
+                    <div className="text-center group">
+                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-200">
+                        <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">Happy Customer</span>
+                    </div>
+                  </div>
+
+                  {/* Floating Elements */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary-200 rounded-full opacity-60 animate-float"></div>
+                  <div
+                    className="absolute -top-2 -right-6 w-6 h-6 bg-accent-200 rounded-full opacity-60 animate-float"
+                    style={{ animationDelay: "1s" }}
+                  ></div>
+                  <div
+                    className="absolute -bottom-3 left-8 w-4 h-4 bg-green-200 rounded-full opacity-60 animate-float"
+                    style={{ animationDelay: "2s" }}
+                  ></div>
                 </div>
               </div>
             </div>
@@ -348,9 +443,111 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Services Showcase */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16 space-y-4">
+            <div className="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold">
+              <Sparkles className="h-4 w-4 mr-2" />
+              Perfect For Every Event
+            </div>
+            <h2 className="heading-lg text-gray-900">Porta Potty Rentals for Every Occasion</h2>
+            <p className="body-md text-gray-600 max-w-3xl mx-auto">
+              From intimate gatherings to large-scale events, we have the perfect portable restroom solution
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Wedding Events */}
+            <div className="text-center group">
+              <div className="relative mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl flex items-center justify-center mx-auto shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
+                  <svg className="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-pink-300 rounded-full opacity-60"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Weddings</h3>
+              <p className="text-gray-600 text-sm">Elegant luxury units for your special day</p>
+            </div>
+
+            {/* Construction Sites */}
+            <div className="text-center group">
+              <div className="relative mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center mx-auto shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
+                  <svg className="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-orange-300 rounded-full opacity-60"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Construction</h3>
+              <p className="text-gray-600 text-sm">Durable units for job sites and projects</p>
+            </div>
+
+            {/* Festivals & Events */}
+            <div className="text-center group">
+              <div className="relative mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mx-auto shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
+                  <svg className="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-300 rounded-full opacity-60"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Festivals</h3>
+              <p className="text-gray-600 text-sm">High-capacity solutions for large crowds</p>
+            </div>
+
+            {/* Private Parties */}
+            <div className="text-center group">
+              <div className="relative mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mx-auto shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
+                  <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-300 rounded-full opacity-60"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Private Parties</h3>
+              <p className="text-gray-600 text-sm">Clean, convenient units for backyard events</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 sm:py-20 lg:py-24 gradient-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
+        <div className="absolute inset-0 opacity-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundSize: "60px 60px",
+            }}
+          ></div>
+        </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           <div className="space-y-4">
             <h2 className="heading-lg text-white">Ready to List Your Porta Potty Rental Business?</h2>
