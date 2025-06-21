@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Mail, Phone, MapPin, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -37,7 +36,8 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4 text-shadow-strong">Contact Us</h1>
-            <p className="text-lg text-gray-700 text-shadow-soft bg-slate-50 bg-white bg-transparent bg-slate-600ssible.
+            <p className="text-lg text-gray-700 text-shadow-soft">
+              Get in touch with our team. We're here to help you find the perfect porta potty rental solution.
             </p>
           </div>
 
