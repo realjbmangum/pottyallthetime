@@ -62,6 +62,7 @@ export default function VendorsGrid() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [usingMockData, setUsingMockData] = useState(false)
+  const [debugInfo, setDebugInfo] = useState<any>(null)
 
   useEffect(() => {
     async function fetchVendors() {
@@ -82,28 +83,74 @@ export default function VendorsGrid() {
           throw new Error("Supabase client is not initialized")
         }
 
-        const { data, error: supabaseError } = await supabase
-          .from("vendors")
-          .select("*")
-          .eq("isActive", true)
-          .order("name")
+        // First, let's try to get the table structure to see what columns exist
+        console.log("Attempting to fetch vendors...")
+
+        // Try different approaches to handle the column name issue
+        let data, supabaseError
+
+        // First try with isActive (camelCase)
+        try {
+          const result = await supabase.from("vendors").select("*").eq("isActive", true).order("name")
+
+          data = result.data
+          supabaseError = result.error
+
+          if (!supabaseError && data) {
+            console.log("Success with isActive column")
+            setDebugInfo({ columnUsed: "isActive", recordCount: data.length })
+          }
+        } catch (err) {
+          console.log("Failed with isActive, trying is_active...")
+
+          // Try with is_active (snake_case)
+          try {
+            const result = await supabase.from("vendors").select("*").eq("is_active", true).order("name")
+
+            data = result.data
+            supabaseError = result.error
+
+            if (!supabaseError && data) {
+              console.log("Success with is_active column")
+              setDebugInfo({ columnUsed: "is_active", recordCount: data.length })
+            }
+          } catch (err2) {
+            console.log("Failed with is_active, trying without filter...")
+
+            // Try without the active filter to see all records
+            const result = await supabase.from("vendors").select("*").order("name")
+
+            data = result.data
+            supabaseError = result.error
+
+            if (!supabaseError && data) {
+              console.log("Success without active filter")
+              setDebugInfo({
+                columnUsed: "none (no filter)",
+                recordCount: data.length,
+                sampleRecord: data[0] ? Object.keys(data[0]) : [],
+              })
+            }
+          }
+        }
 
         if (supabaseError) {
           console.error("Supabase error:", supabaseError)
-          // Fallback to mock data on error
           setVendors(mockVendors)
           setUsingMockData(true)
           setError(`Database error: ${supabaseError.message}. Showing sample data.`)
+          setDebugInfo({ error: supabaseError })
         } else {
           setVendors(data || [])
           setUsingMockData(false)
+          console.log(`Loaded ${data?.length || 0} vendors from database`)
         }
       } catch (err) {
         console.error("Error fetching vendors:", err)
-        // Fallback to mock data
         setVendors(mockVendors)
         setUsingMockData(true)
         setError(err instanceof Error ? err.message : "Failed to fetch vendors. Showing sample data.")
+        setDebugInfo({ unexpectedError: err })
       } finally {
         setLoading(false)
       }
@@ -115,7 +162,7 @@ export default function VendorsGrid() {
   const supabaseStatus = getSupabaseStatus()
 
   // Show configuration info for development
-  if (!isSupabaseConfigured() && process.env.NODE_ENV === "development") {
+  if (!isSupabaseConfigured()) {
     return (
       <div className="py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,6 +187,7 @@ export default function VendorsGrid() {
                       {supabaseStatus.urlValid ? "(Valid)" : "(Invalid format)"}
                     </p>
                     <p>• Key: {supabaseStatus.hasKey ? "✓ Provided" : "✗ Missing"}</p>
+                    <p>• Use Supabase: {supabaseStatus.useSupabase ? "✓ Enabled" : "✗ Disabled"}</p>
                   </div>
                   <div className="mt-3">
                     <a
@@ -155,7 +203,6 @@ export default function VendorsGrid() {
             </div>
           </div>
 
-          {/* Show mock data */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
             <p className="text-yellow-800 text-sm">
               <strong>Showing sample data</strong> - Configure Supabase to see your real vendors
@@ -187,6 +234,14 @@ export default function VendorsGrid() {
               <div className="ml-4">
                 <h3 className="text-lg font-medium text-red-800">Database Error</h3>
                 <p className="mt-2 text-sm text-red-700">{error}</p>
+                {debugInfo && (
+                  <details className="mt-2">
+                    <summary className="cursor-pointer text-xs text-red-600">Debug Info</summary>
+                    <pre className="mt-1 text-xs bg-red-100 p-2 rounded overflow-auto">
+                      {JSON.stringify(debugInfo, null, 2)}
+                    </pre>
+                  </details>
+                )}
               </div>
             </div>
           </div>
@@ -198,11 +253,20 @@ export default function VendorsGrid() {
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Show warning if using mock data in production */}
+        {/* Show warning if using mock data */}
         {usingMockData && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
             <p className="text-yellow-800 text-sm">
               <strong>Showing sample data</strong> - {error || "Database not configured"}
+            </p>
+          </div>
+        )}
+
+        {/* Show debug info in development */}
+        {debugInfo && process.env.NODE_ENV === "development" && (
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+            <p className="text-gray-800 text-sm">
+              <strong>Debug:</strong> {JSON.stringify(debugInfo)}
             </p>
           </div>
         )}
@@ -227,7 +291,6 @@ function VendorGrid({ vendors }: { vendors: Vendor[] }) {
 
   return (
     <div>
-      {/* Header */}
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Vendors</h2>
         <p className="text-gray-600">
@@ -235,7 +298,6 @@ function VendorGrid({ vendors }: { vendors: Vendor[] }) {
         </p>
       </div>
 
-      {/* Vendors Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {vendors.map((vendor) => (
           <VendorCard key={vendor.id} vendor={vendor} />
