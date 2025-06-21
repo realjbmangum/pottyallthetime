@@ -36,8 +36,7 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4 text-shadow-strong">Contact Us</h1>
-            <p className="text-lg text-gray-700 text-shadow-soft">
-              Get in touch with our team. We're here to help you find the perfect porta potty rental solution.
+            <p className="text-lg text-gray-700 text-shadow-soft with our team. We're here to help you find the perfect porta potty rental solution.
             </p>
           </div>
 
