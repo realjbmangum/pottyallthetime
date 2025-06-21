@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/porta-potty-rental" className="flex items-center space-x-2 mb-4">
-              <PortaPottyLogo size="lg" className="text-primary-400" />
+              <PortaPottyLogo size="lg" />
               <span className="text-xl font-bold">Porta Potty Directory</span>
             </Link>
             <p className="text-gray-300 mb-4">

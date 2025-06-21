@@ -15,8 +15,8 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <Link href="/porta-potty-rental" className="flex items-center space-x-3 group">
-            <div className="gradient-primary p-2 rounded-xl shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
-              <PortaPottyLogo size="md" className="text-white" />
+            <div className="p-1 rounded-xl shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
+              <PortaPottyLogo size="md" />
             </div>
             <div className="hidden sm:block">
               <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
