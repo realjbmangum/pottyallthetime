@@ -14,19 +14,21 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
-          <Link href="/porta-potty-rental" className="flex items-center space-x-3 group">
-            <div className="p-1 rounded-xl shadow-modern group-hover:shadow-modern-lg transition-all duration-300">
-              <PortaPottyLogo size="md" />
+          <Link href="/porta-potty-rental" className="flex items-center gap-4 group">
+            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+              <PortaPottyLogo size="md" className="filter brightness-0 invert" />
             </div>
             <div className="hidden sm:block">
-              <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
+              <div className="text-2xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors duration-200">
+                Porta Potty Directory
+              </div>
+              <p className="text-base text-gray-600 -mt-1">Nationwide Porta Potty Rentals</p>
+            </div>
+            <div className="sm:hidden">
+              <span className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors duration-200">
                 Porta Potty Directory
               </span>
-              <p className="text-xs text-secondary-600 -mt-1">Find Local Porta Potty Rentals</p>
             </div>
-            <span className="sm:hidden text-lg font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-              Porta Potty Directory
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
