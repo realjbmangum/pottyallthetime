@@ -37,8 +37,7 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4 text-shadow-strong">Contact Us</h1>
-            <p className="text-lg text-gray-700 text-shadow-soft">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            <p className="text-lg text-gray-700 text-shadow-soft bg-slate-50 bg-white bg-transparent bg-slate-600ssible.
             </p>
           </div>
 
