@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Star, Users, Shield, CheckCircle, Sparkles, Award, Clock } from "lucide-react"
+import { ArrowRight, CheckCircle, Sparkles, Award, Clock, Truck, FileText, Search } from "lucide-react"
 import SearchBar from "@/components/search-bar"
 import VendorCard from "@/components/vendor-card"
 import { Button } from "@/components/ui/button"
@@ -135,41 +135,54 @@ export default function HomePage() {
                 <SearchBar placeholder="Enter your city or state for porta potty rental..." />
               </div>
 
-              {/* Trust Indicators with Modern Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto px-4">
-                <div className="glass-effect-strong rounded-2xl p-6 hover:scale-105 transition-all duration-300 group">
-                  <div className="flex items-center justify-center space-x-3 text-gray-900">
-                    <div className="p-2 bg-accent-100 rounded-xl group-hover:bg-accent-200 transition-colors duration-200">
-                      <Star className="h-6 w-6 text-accent-600" />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-bold text-lg">10,000+</div>
-                      <div className="text-sm text-gray-600">Happy Customers</div>
-                    </div>
-                  </div>
-                </div>
+              {/* Why People Use PottyDirectory */}
+              <div className="space-y-6">
+                <h2 className="text-2xl font-bold text-gray-900 text-shadow-soft">Why People Use PottyDirectory</h2>
 
-                <div className="glass-effect-strong rounded-2xl p-6 hover:scale-105 transition-all duration-300 group">
-                  <div className="flex items-center justify-center space-x-3 text-gray-900">
-                    <div className="p-2 bg-primary-100 rounded-xl group-hover:bg-primary-200 transition-colors duration-200">
-                      <Users className="h-6 w-6 text-primary-600" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto px-4">
+                  <div className="glass-effect-strong rounded-2xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div className="flex items-center justify-center space-x-3 text-gray-900">
+                      <div className="p-2 bg-blue-100 rounded-xl group-hover:bg-blue-200 transition-colors duration-200">
+                        <Truck className="h-6 w-6 text-blue-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-bold text-lg">1,000+</div>
+                        <div className="text-sm text-gray-600">Porta Potty Rentals Tracked</div>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <div className="font-bold text-lg">500+</div>
-                      <div className="text-sm text-gray-600">Verified Vendors</div>
-                    </div>
+                    <p className="text-xs text-gray-500 mt-3 text-center">
+                      Nationwide vendor data to compare rates, features & availability.
+                    </p>
                   </div>
-                </div>
 
-                <div className="glass-effect-strong rounded-2xl p-6 hover:scale-105 transition-all duration-300 group">
-                  <div className="flex items-center justify-center space-x-3 text-gray-900">
-                    <div className="p-2 bg-green-100 rounded-xl group-hover:bg-green-200 transition-colors duration-200">
-                      <Shield className="h-6 w-6 text-green-600" />
+                  <div className="glass-effect-strong rounded-2xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div className="flex items-center justify-center space-x-3 text-gray-900">
+                      <div className="p-2 bg-green-100 rounded-xl group-hover:bg-green-200 transition-colors duration-200">
+                        <FileText className="h-6 w-6 text-green-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-bold text-lg">Verified</div>
+                        <div className="text-sm text-gray-600">Vendors by State</div>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <div className="font-bold text-lg">100%</div>
-                      <div className="text-sm text-gray-600">Insured Rentals</div>
+                    <p className="text-xs text-gray-500 mt-3 text-center">
+                      Browse trusted local providers with real contact info.
+                    </p>
+                  </div>
+
+                  <div className="glass-effect-strong rounded-2xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div className="flex items-center justify-center space-x-3 text-gray-900">
+                      <div className="p-2 bg-purple-100 rounded-xl group-hover:bg-purple-200 transition-colors duration-200">
+                        <Search className="h-6 w-6 text-purple-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-bold text-lg">Filter</div>
+                        <div className="text-sm text-gray-600">by Features</div>
+                      </div>
                     </div>
+                    <p className="text-xs text-gray-500 mt-3 text-center">
+                      Search for handwashing stations, climate control, locks, and more.
+                    </p>
                   </div>
                 </div>
               </div>
