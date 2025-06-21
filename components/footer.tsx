@@ -19,9 +19,11 @@ export default function Footer() {
               <span className="text-xl font-bold">Porta Potty Directory</span>
             </Link>
             <p className="text-gray-300 mb-4">
-              Your trusted source for porta potty rentals near me and portable toilet providers nationwide. Find
-              reliable event and construction site rentals with ease. Compare porta potty pricing and features from
-              verified vendors to get the best portable restroom solution for your needs.
+              Find local porta potty rentals near you with ease. Compare features, pricing, and availability from top portable toilet providers across the U.S. Whether it’s a wedding, construction site, festival, or backyard party, we help you find the perfect portable restroom rental fast.
+
+Search by city, state, or zip to discover the best porta potty companies, restroom trailers, and event toilet rentals in your area.
+
+
             </p>
           </div>
 
