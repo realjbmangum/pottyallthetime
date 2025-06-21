@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
-import { Database, CheckCircle, XCircle, Loader2, Settings, ExternalLink } from "lucide-react"
+import { Database, CheckCircle, XCircle, Loader2, Settings, ExternalLink, AlertTriangle } from "lucide-react"
 
 interface TestResult {
   step: string
-  status: "loading" | "success" | "error"
+  status: "loading" | "success" | "error" | "warning"
   message: string
   details?: any
 }
@@ -23,7 +23,7 @@ export default function TestVendorsPage() {
     setIsRunning(true)
     setTestResults([])
 
-    // Test 1: Environment Variables
+    // Test 1: Environment Variables - More detailed check
     addResult({
       step: "Environment Variables",
       status: "loading",
@@ -37,9 +37,38 @@ export default function TestVendorsPage() {
       urlExists: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
       keyExists: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       useSupabaseExists: !!process.env.NEXT_PUBLIC_USE_SUPABASE,
+      // Show first/last few characters for debugging
+      urlPreview: process.env.NEXT_PUBLIC_SUPABASE_URL
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.substring(0, 20)}...${process.env.NEXT_PUBLIC_SUPABASE_URL.slice(-10)}`
+        : "NOT_SET",
+      keyPreview: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 10)}...${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.slice(-10)}`
+        : "NOT_SET",
+      // Check if they contain placeholder values
+      urlIsPlaceholder:
+        process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("your_supabase_url") ||
+        process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("placeholder"),
+      keyIsPlaceholder:
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes("your_supabase_anon_key") ||
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.includes("placeholder"),
     }
 
-    if (envVars.urlExists && envVars.keyExists) {
+    // Check for placeholder values
+    if (envVars.urlIsPlaceholder || envVars.keyIsPlaceholder) {
+      setTestResults((prev) =>
+        prev.map((r) =>
+          r.step === "Environment Variables"
+            ? {
+                ...r,
+                status: "warning",
+                message:
+                  "Environment variables contain placeholder values - please update with real Supabase credentials",
+                details: envVars,
+              }
+            : r,
+        ),
+      )
+    } else if (envVars.urlExists && envVars.keyExists) {
       setTestResults((prev) =>
         prev.map((r) =>
           r.step === "Environment Variables"
@@ -200,6 +229,8 @@ export default function TestVendorsPage() {
         return <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
       case "success":
         return <CheckCircle className="h-5 w-5 text-green-500" />
+      case "warning":
+        return <AlertTriangle className="h-5 w-5 text-yellow-500" />
       case "error":
         return <XCircle className="h-5 w-5 text-red-500" />
     }
@@ -211,6 +242,8 @@ export default function TestVendorsPage() {
         return "border-blue-200 bg-blue-50"
       case "success":
         return "border-green-200 bg-green-50"
+      case "warning":
+        return "border-yellow-200 bg-yellow-50"
       case "error":
         return "border-red-200 bg-red-50"
     }
@@ -222,7 +255,23 @@ export default function TestVendorsPage() {
         <div className="text-center mb-8">
           <Database className="h-12 w-12 text-blue-600 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Supabase Connection Test</h1>
-          <p className="text-gray-600">Testing connection to your existing Supabase database</p>
+          <p className="text-gray-600">Testing connection to your Supabase database</p>
+        </div>
+
+        {/* Environment Check */}
+        <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 mb-8">
+          <h3 className="font-medium text-gray-900 mb-2">Current Environment</h3>
+          <div className="text-sm text-gray-700 space-y-1">
+            <p>
+              <strong>Node Environment:</strong> {process.env.NODE_ENV}
+            </p>
+            <p>
+              <strong>Vercel Environment:</strong> {process.env.VERCEL_ENV || "Not on Vercel"}
+            </p>
+            <p>
+              <strong>Build Time:</strong> {new Date().toISOString()}
+            </p>
+          </div>
         </div>
 
         {/* Setup Instructions */}
@@ -230,27 +279,43 @@ export default function TestVendorsPage() {
           <div className="flex items-start">
             <Settings className="h-6 w-6 text-blue-600 mt-1 mr-3" />
             <div>
-              <h3 className="text-lg font-medium text-blue-900 mb-2">Quick Setup Instructions</h3>
+              <h3 className="text-lg font-medium text-blue-900 mb-2">Vercel Environment Variables Setup</h3>
               <div className="text-sm text-blue-800 space-y-2">
                 <p>
-                  <strong>1. Get your Supabase credentials:</strong>
+                  <strong>1. In your Vercel dashboard:</strong>
                 </p>
                 <ul className="list-disc list-inside ml-4 space-y-1">
-                  <li>Go to your Supabase project dashboard</li>
-                  <li>Click "Settings" → "API"</li>
-                  <li>Copy your "Project URL" and "anon public" key</li>
+                  <li>Go to your project → Settings → Environment Variables</li>
+                  <li>Add these three variables (case-sensitive):</li>
                 </ul>
+                <div className="bg-blue-100 p-3 rounded font-mono text-xs space-y-1">
+                  <div>
+                    <strong>Name:</strong> NEXT_PUBLIC_SUPABASE_URL
+                  </div>
+                  <div>
+                    <strong>Value:</strong> https://your-project-id.supabase.co
+                  </div>
+                  <div className="mt-2">
+                    <strong>Name:</strong> NEXT_PUBLIC_SUPABASE_ANON_KEY
+                  </div>
+                  <div>
+                    <strong>Value:</strong> eyJ... (your anon key)
+                  </div>
+                  <div className="mt-2">
+                    <strong>Name:</strong> NEXT_PUBLIC_USE_SUPABASE
+                  </div>
+                  <div>
+                    <strong>Value:</strong> true
+                  </div>
+                </div>
                 <p>
-                  <strong>2. Add to your .env.local file:</strong>
+                  <strong>2. After adding variables:</strong>
                 </p>
-                <pre className="bg-blue-100 p-2 rounded text-xs font-mono">
-                  {`NEXT_PUBLIC_SUPABASE_URL=your_project_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-NEXT_PUBLIC_USE_SUPABASE=true`}
-                </pre>
-                <p>
-                  <strong>3. Restart your dev server</strong> (npm run dev)
-                </p>
+                <ul className="list-disc list-inside ml-4 space-y-1">
+                  <li>Go to Deployments tab</li>
+                  <li>Click "..." on latest deployment → "Redeploy"</li>
+                  <li>Wait for deployment to complete</li>
+                </ul>
               </div>
             </div>
           </div>
