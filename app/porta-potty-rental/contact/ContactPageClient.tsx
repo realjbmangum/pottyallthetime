@@ -37,7 +37,7 @@ export default function ContactPageClient() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4 text-shadow-strong">
               Get in Touch with Porta Potty Directory
             </h1>
-            <p className="text-lg text-gray-700 text-shadow-soft max-w-3xl mx-auto">
+            <p className="text-lg text-white text-shadow-soft max-w-3xl mx-auto">
               Have questions about porta potty rentals near you? Whether you're a vendor looking to list your services
               or a customer searching for portable toilet options, reach out through the form below. We'll get back to
               you as soon as possible.
