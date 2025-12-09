@@ -4,34 +4,75 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 import VendorCard from '../../../components/VendorCard.astro';
 import AdSlot from '../../../components/AdSlot.astro';
 import states from '../../../data/states.json';
+import topCities from '../../../data/top-cities.json';
 import { getAllCitiesWithState, getVendorsByCity } from '../../../lib/supabase';
 import { citySlug, cityFromSlug } from '../../../lib/utils';
 
 export async function getStaticPaths() {
-  let allCities: { city: string; state: string; count: number }[] = [];
-
+  // Get cities that have vendors in the database
+  let citiesWithVendors: { city: string; state: string; count: number }[] = [];
   try {
-    allCities = await getAllCitiesWithState();
+    citiesWithVendors = await getAllCitiesWithState();
   } catch (error) {
     console.error('Error fetching cities:', error);
   }
 
-  return allCities.map((cityData) => {
+  // Create a Set of existing city-state combinations for quick lookup
+  const existingCities = new Set(
+    citiesWithVendors.map(c => `${c.city}-${c.state}`)
+  );
+
+  // Build paths for all top cities from each state
+  const allPaths: Array<{
+    params: { state: string; city: string };
+    props: { stateName: string; stateSlug: string; stateAbbr: string; cityName: string; citySlugValue: string };
+  }> = [];
+
+  // Add all top cities for each state
+  for (const stateInfo of states) {
+    const stateCities = (topCities as Record<string, string[]>)[stateInfo.name] || [];
+
+    for (const city of stateCities) {
+      allPaths.push({
+        params: {
+          state: stateInfo.slug,
+          city: citySlug(city)
+        },
+        props: {
+          stateName: stateInfo.name,
+          stateSlug: stateInfo.slug,
+          stateAbbr: stateInfo.abbr,
+          cityName: city,
+          citySlugValue: citySlug(city)
+        }
+      });
+    }
+  }
+
+  // Add any cities with vendors that aren't already in our list
+  for (const cityData of citiesWithVendors) {
     const stateInfo = states.find(s => s.name === cityData.state);
-    return {
-      params: {
-        state: stateInfo?.slug || cityData.state.toLowerCase().replace(/\s+/g, '-'),
-        city: citySlug(cityData.city)
-      },
-      props: {
-        stateName: cityData.state,
-        stateSlug: stateInfo?.slug || cityData.state.toLowerCase().replace(/\s+/g, '-'),
-        stateAbbr: stateInfo?.abbr || '',
-        cityName: cityData.city,
-        citySlugValue: citySlug(cityData.city)
-      }
-    };
-  });
+    const stateCities = (topCities as Record<string, string[]>)[cityData.state] || [];
+
+    // Only add if not already in top cities
+    if (!stateCities.includes(cityData.city)) {
+      allPaths.push({
+        params: {
+          state: stateInfo?.slug || cityData.state.toLowerCase().replace(/\s+/g, '-'),
+          city: citySlug(cityData.city)
+        },
+        props: {
+          stateName: cityData.state,
+          stateSlug: stateInfo?.slug || cityData.state.toLowerCase().replace(/\s+/g, '-'),
+          stateAbbr: stateInfo?.abbr || '',
+          cityName: cityData.city,
+          citySlugValue: citySlug(cityData.city)
+        }
+      });
+    }
+  }
+
+  return allPaths;
 }
 
 const { stateName, stateSlug, stateAbbr, cityName, citySlugValue } = Astro.props;
@@ -81,18 +122,66 @@ const breadcrumbs = [
         ))}
       </div>
     ) : (
-      <div class="text-center py-16 bg-gray-50 rounded-xl">
-        <div class="text-6xl mb-4">🚽</div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">No Providers Yet</h2>
-        <p class="text-gray-600 mb-6">
-          We don't have any porta potty rental companies listed in {cityName} yet.
-        </p>
-        <a
-          href="/submit"
-          class="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors"
-        >
-          Add Your Business
-        </a>
+      <div class="bg-white rounded-xl border border-gray-200 p-8 md:p-12">
+        <div class="max-w-2xl mx-auto text-center">
+          <div class="text-6xl mb-6">🚽</div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            Porta Potty Rentals Coming to {cityName}
+          </h2>
+          <p class="text-gray-600 mb-8 leading-relaxed">
+            We're actively building our directory of portable restroom rental companies in {cityName}, {stateAbbr}.
+            Check back soon or be the first provider listed in this area!
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            <a
+              href="/submit"
+              class="inline-flex items-center justify-center bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              List Your Business
+            </a>
+            <a
+              href={`/${stateSlug}`}
+              class="inline-flex items-center justify-center border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+            >
+              Browse Other {stateName} Cities
+            </a>
+          </div>
+
+          <!-- What to expect section -->
+          <div class="text-left bg-gray-50 rounded-xl p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">What services will be available in {cityName}?</h3>
+            <ul class="space-y-3 text-gray-600">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Standard porta potty rentals for construction sites</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Luxury restroom trailers for weddings and events</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>ADA-compliant handicap accessible units</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Hand washing stations and sanitizer dispensers</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     )}
 
