@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import siteConfig from '../../data/site-config.json';
+import blogPosts from '../../data/blog-posts.json';
+
+const post = blogPosts.find(p => p.slug === 'how-many-porta-potties-do-i-need')!;
+const siteUrl = `https://${siteConfig.domain}`;
+
+const articleData = {
+  headline: post.title,
+  description: post.description,
+  datePublished: post.publishedAt,
+  dateModified: post.updatedAt,
+  author: { '@type': 'Organization', name: siteConfig.name, url: siteUrl },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.name,
+    logo: { '@type': 'ImageObject', url: `${siteUrl}/images/PottyDirectory_Logo.png` }
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${siteUrl}/blog/${post.slug}` }
+};
+
+const relatedPosts = blogPosts.filter(p => p.slug !== post.slug).slice(0, 3);
+---
+
+<BaseLayout title={post.title} description={post.description}>
+  <StructuredData type="Article" data={articleData} />
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:text-primary-600">Home</a></li>
+        <li>/</li>
+        <li><a href="/blog" class="hover:text-primary-600">Blog</a></li>
+        <li>/</li>
+        <li class="text-gray-900">How Many Porta Potties</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="mb-10">
+      <span class="inline-block bg-purple-100 text-purple-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Planning</span>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+        {post.title}
+      </h1>
+      <p class="text-xl text-gray-600 leading-relaxed">{post.description}</p>
+      <div class="mt-6 flex items-center text-sm text-gray-500">
+        <span>{post.readTime}</span>
+        <span class="mx-2">•</span>
+        <span>Updated December 2024</span>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>
+        One of the most common questions we get: <strong>"How many porta potties do I need?"</strong> The answer depends on your guest count, event duration, and a few other factors. Let's break it down.
+      </p>
+
+      <div class="bg-primary-50 border border-primary-200 rounded-xl p-6 my-6">
+        <p class="text-lg font-semibold text-primary-800 mb-2">Quick Calculator</p>
+        <p class="text-primary-700">
+          Use our <a href="/calculator" class="font-semibold underline">free porta potty calculator</a> to get an instant recommendation based on your specific situation.
+        </p>
+      </div>
+
+      <AdSlot slot="content" />
+
+      <h2 id="quick-rules">Quick Rules of Thumb</h2>
+
+      <h3>For Events</h3>
+      <ul>
+        <li><strong>1 unit per 50-100 guests</strong> for a 4-hour event</li>
+        <li><strong>Add 25%</strong> if serving alcohol</li>
+        <li><strong>Add 25%</strong> if majority female guests</li>
+        <li><strong>Double the count</strong> for all-day events (8+ hours)</li>
+      </ul>
+
+      <h3>For Construction Sites</h3>
+      <ul>
+        <li><strong>1 unit per 10 workers</strong> (OSHA requirement)</li>
+        <li>Minimum of <strong>1 unit</strong> regardless of worker count</li>
+      </ul>
+
+      <h3>For Weddings</h3>
+      <ul>
+        <li><strong>1 unit per 25-35 guests</strong></li>
+        <li><strong>+1 unit</strong> for wedding party/VIPs</li>
+        <li>Consider <strong>luxury restroom trailers</strong> for upscale feel</li>
+      </ul>
+
+      <h2 id="detailed-chart">Detailed Quantity Chart</h2>
+
+      <div class="overflow-x-auto my-8">
+        <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">Guests</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">4 Hours</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">6 Hours</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">8+ Hours</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">With Alcohol</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">25</td>
+              <td class="px-4 py-4 text-sm text-gray-600">1</td>
+              <td class="px-4 py-4 text-sm text-gray-600">1</td>
+              <td class="px-4 py-4 text-sm text-gray-600">2</td>
+              <td class="px-4 py-4 text-sm text-gray-600">2</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">50</td>
+              <td class="px-4 py-4 text-sm text-gray-600">1</td>
+              <td class="px-4 py-4 text-sm text-gray-600">2</td>
+              <td class="px-4 py-4 text-sm text-gray-600">3</td>
+              <td class="px-4 py-4 text-sm text-gray-600">2</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">100</td>
+              <td class="px-4 py-4 text-sm text-gray-600">2</td>
+              <td class="px-4 py-4 text-sm text-gray-600">3</td>
+              <td class="px-4 py-4 text-sm text-gray-600">4</td>
+              <td class="px-4 py-4 text-sm text-gray-600">3-4</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">150</td>
+              <td class="px-4 py-4 text-sm text-gray-600">3</td>
+              <td class="px-4 py-4 text-sm text-gray-600">4</td>
+              <td class="px-4 py-4 text-sm text-gray-600">5</td>
+              <td class="px-4 py-4 text-sm text-gray-600">4-5</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">200</td>
+              <td class="px-4 py-4 text-sm text-gray-600">4</td>
+              <td class="px-4 py-4 text-sm text-gray-600">5</td>
+              <td class="px-4 py-4 text-sm text-gray-600">6</td>
+              <td class="px-4 py-4 text-sm text-gray-600">5-6</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">300</td>
+              <td class="px-4 py-4 text-sm text-gray-600">5</td>
+              <td class="px-4 py-4 text-sm text-gray-600">7</td>
+              <td class="px-4 py-4 text-sm text-gray-600">9</td>
+              <td class="px-4 py-4 text-sm text-gray-600">7-8</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">500</td>
+              <td class="px-4 py-4 text-sm text-gray-600">7</td>
+              <td class="px-4 py-4 text-sm text-gray-600">10</td>
+              <td class="px-4 py-4 text-sm text-gray-600">14</td>
+              <td class="px-4 py-4 text-sm text-gray-600">12-14</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-4 py-4 text-sm font-medium text-gray-900">1,000</td>
+              <td class="px-4 py-4 text-sm text-gray-600">14</td>
+              <td class="px-4 py-4 text-sm text-gray-600">18</td>
+              <td class="px-4 py-4 text-sm text-gray-600">25</td>
+              <td class="px-4 py-4 text-sm text-gray-600">22-25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="factors">Factors That Affect Your Count</h2>
+
+      <h3>1. Event Duration</h3>
+      <p>
+        Longer events = more bathroom trips. An 8-hour festival needs roughly double the units of a 4-hour party.
+      </p>
+
+      <h3>2. Alcohol Service</h3>
+      <p>
+        Alcohol increases bathroom usage by 25-40%. If you're serving beer, wine, or cocktails, add extra units.
+      </p>
+
+      <h3>3. Guest Demographics</h3>
+      <p>
+        Women typically take 2-3x longer in the restroom than men. Events with majority female attendance need more units.
+      </p>
+
+      <h3>4. Food & Beverages</h3>
+      <p>
+        Serving lots of drinks (even non-alcoholic)? Expect higher usage. Coffee service especially increases demand.
+      </p>
+
+      <h3>5. Peak Times</h3>
+      <p>
+        Consider when everyone will need to go at once—like after a ceremony or during intermission. Plan for peaks, not averages.
+      </p>
+
+      <h2 id="by-event-type">Recommendations by Event Type</h2>
+
+      <h3>Outdoor Wedding (150 guests, 5 hours)</h3>
+      <ul>
+        <li>4-5 standard units OR</li>
+        <li>1 luxury restroom trailer (2-3 stalls)</li>
+        <li>+1 unit for wedding party</li>
+        <li>Include hand washing stations</li>
+      </ul>
+
+      <h3>Company Picnic (200 guests, 6 hours)</h3>
+      <ul>
+        <li>5-6 standard units</li>
+        <li>2 hand wash stations</li>
+        <li>1 ADA-accessible unit</li>
+      </ul>
+
+      <h3>Music Festival (1,000 guests, all day)</h3>
+      <ul>
+        <li>25-30 standard units</li>
+        <li>2-3 ADA units</li>
+        <li>Hand wash stations at each cluster</li>
+        <li>Mid-day servicing recommended</li>
+      </ul>
+
+      <h3>Construction Site (25 workers)</h3>
+      <ul>
+        <li>2-3 standard units (exceeds OSHA minimum)</li>
+        <li>1 hand wash station</li>
+        <li>Weekly servicing</li>
+      </ul>
+
+      <h2 id="mistakes">Common Mistakes</h2>
+
+      <ol>
+        <li>
+          <strong>Ordering the bare minimum</strong><br>
+          Long lines frustrate guests. When in doubt, order one more unit than you think you need.
+        </li>
+        <li>
+          <strong>Forgetting ADA requirements</strong><br>
+          Public events need accessible units. Generally 1 ADA unit per 20 standard units, minimum 1.
+        </li>
+        <li>
+          <strong>Skipping hand washing</strong><br>
+          Guests expect it. Budget for hand wash stations or sanitizer dispensers.
+        </li>
+        <li>
+          <strong>Not accounting for alcohol</strong><br>
+          That open bar means 25% more bathroom trips. Plan accordingly.
+        </li>
+      </ol>
+
+      <h2 id="bottom-line">The Bottom Line</h2>
+
+      <p>
+        Use our <a href="/calculator"><strong>free calculator</strong></a> for a personalized recommendation, or follow this simple formula:
+      </p>
+
+      <div class="bg-gray-100 border border-gray-300 rounded-xl p-6 my-6 text-center">
+        <p class="text-xl font-mono text-gray-800">
+          (Guests ÷ 50) × (Hours ÷ 4) × Alcohol Factor (1.25 if yes) = Units Needed
+        </p>
+      </div>
+
+      <p>
+        Round up, add an extra unit for safety, and you're set.
+      </p>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 bg-gradient-to-br from-primary-50 to-blue-50 rounded-2xl p-8 text-center border border-primary-100">
+      <h3 class="text-2xl font-bold text-gray-900 mb-3">Get Your Exact Count</h3>
+      <p class="text-gray-600 mb-6">Use our free calculator for a personalized recommendation</p>
+      <a href="/calculator" class="inline-flex items-center bg-primary-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors">
+        Try the Calculator
+      </a>
+    </div>
+
+    <!-- Related -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-8">Related Articles</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {relatedPosts.map((related) => (
+          <a href={`/blog/${related.slug}`} class="bg-white rounded-xl p-6 border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-700">{related.category}</span>
+            <h3 class="text-lg font-semibold text-gray-900 mt-3 line-clamp-2">{related.title}</h3>
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</BaseLayout>

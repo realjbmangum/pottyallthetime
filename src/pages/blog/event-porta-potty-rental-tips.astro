@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import siteConfig from '../../data/site-config.json';
+import blogPosts from '../../data/blog-posts.json';
+
+const post = blogPosts.find(p => p.slug === 'event-porta-potty-rental-tips')!;
+const siteUrl = `https://${siteConfig.domain}`;
+
+const articleData = {
+  headline: post.title,
+  description: post.description,
+  datePublished: post.publishedAt,
+  dateModified: post.updatedAt,
+  author: { '@type': 'Organization', name: siteConfig.name, url: siteUrl },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.name,
+    logo: { '@type': 'ImageObject', url: `${siteUrl}/images/PottyDirectory_Logo.png` }
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${siteUrl}/blog/${post.slug}` }
+};
+
+const relatedPosts = blogPosts.filter(p => p.slug !== post.slug).slice(0, 3);
+---
+
+<BaseLayout title={post.title} description={post.description}>
+  <StructuredData type="Article" data={articleData} />
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+      <ol class="flex items-center space-x-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:text-primary-600">Home</a></li>
+        <li>/</li>
+        <li><a href="/blog" class="hover:text-primary-600">Blog</a></li>
+        <li>/</li>
+        <li class="text-gray-900">Event Porta Potty Tips</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="mb-10">
+      <span class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Events</span>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+        {post.title}
+      </h1>
+      <p class="text-xl text-gray-600 leading-relaxed">{post.description}</p>
+      <div class="mt-6 flex items-center text-sm text-gray-500">
+        <span>{post.readTime}</span>
+        <span class="mx-2">•</span>
+        <span>Updated December 2024</span>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>
+        Planning an outdoor event? Whether it's a music festival, corporate gathering, family reunion, or community fair, <strong>portable restrooms are essential</strong> for guest comfort. Here's everything you need to know to get it right.
+      </p>
+
+      <AdSlot slot="content" />
+
+      <h2 id="how-many">How Many Porta Potties Do You Need?</h2>
+
+      <p>The golden rule for event planning:</p>
+
+      <div class="bg-primary-50 border border-primary-200 rounded-xl p-6 my-6">
+        <p class="text-lg font-semibold text-primary-800 mb-2">Quick Formula</p>
+        <p class="text-primary-700">
+          <strong>1 porta potty per 50-100 guests</strong> for a 4-hour event<br>
+          Add 25% more if serving alcohol
+        </p>
+      </div>
+
+      <p>Here's a more detailed breakdown:</p>
+
+      <div class="overflow-x-auto my-8">
+        <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Event Size</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">4 Hours</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">8 Hours</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">With Alcohol</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-6 py-4 text-sm text-gray-900">50 guests</td>
+              <td class="px-6 py-4 text-sm text-gray-600">1 unit</td>
+              <td class="px-6 py-4 text-sm text-gray-600">2 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">2 units</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-6 py-4 text-sm text-gray-900">100 guests</td>
+              <td class="px-6 py-4 text-sm text-gray-600">2 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">3 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">3-4 units</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm text-gray-900">250 guests</td>
+              <td class="px-6 py-4 text-sm text-gray-600">4 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">6 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">7-8 units</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="px-6 py-4 text-sm text-gray-900">500 guests</td>
+              <td class="px-6 py-4 text-sm text-gray-600">7 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">10 units</td>
+              <td class="px-6 py-4 text-sm text-gray-600">12-14 units</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Use our <a href="/calculator">free porta potty calculator</a> to get an exact count for your event.
+      </p>
+
+      <h2 id="placement">Porta Potty Placement Tips</h2>
+
+      <p>Where you put your portable restrooms matters almost as much as how many you have.</p>
+
+      <h3>Do:</h3>
+      <ul>
+        <li><strong>Place them on flat, solid ground</strong> - Avoid mud, slopes, or soft grass</li>
+        <li><strong>Keep them accessible</strong> - Within 150-200 feet of main event areas</li>
+        <li><strong>Create clusters</strong> - Groups of 2-4 units are easier to find than scattered singles</li>
+        <li><strong>Add lighting</strong> - Essential for evening events</li>
+        <li><strong>Include hand-washing stations</strong> - Place one for every 2-3 porta potties</li>
+        <li><strong>Consider traffic flow</strong> - Don't block walkways or emergency exits</li>
+      </ul>
+
+      <h3>Don't:</h3>
+      <ul>
+        <li><strong>Place near food service areas</strong> - Keep at least 50 feet away</li>
+        <li><strong>Hide them completely</strong> - Guests need to find them</li>
+        <li><strong>Put them upwind</strong> - Position downwind from main gathering areas</li>
+        <li><strong>Block truck access</strong> - Service vehicles need to reach them</li>
+      </ul>
+
+      <h2 id="types">Choosing the Right Type</h2>
+
+      <h3>Standard Units</h3>
+      <p>
+        Best for: Casual outdoor events, festivals, sports events<br>
+        Cost: $75-150/day
+      </p>
+
+      <h3>Deluxe Units with Hand Sanitizer</h3>
+      <p>
+        Best for: Corporate events, upscale gatherings<br>
+        Cost: $150-250/day
+      </p>
+
+      <h3>ADA-Accessible Units</h3>
+      <p>
+        <strong>Required by law</strong> for public events. Generally need 1 accessible unit per 20 standard units, minimum of 1.<br>
+        Cost: $150-300/day
+      </p>
+
+      <h3>Luxury Restroom Trailers</h3>
+      <p>
+        Best for: Weddings, VIP areas, high-end corporate events<br>
+        Cost: $500-1,500/day
+      </p>
+
+      <h2 id="mistakes">5 Common Mistakes to Avoid</h2>
+
+      <ol>
+        <li>
+          <strong>Not booking early enough</strong><br>
+          Peak season (May-October) fills up fast. Book 4-6 weeks ahead for best selection and prices.
+        </li>
+        <li>
+          <strong>Underestimating quantity</strong><br>
+          Long lines = unhappy guests. When in doubt, order one extra unit.
+        </li>
+        <li>
+          <strong>Forgetting hand-washing stations</strong><br>
+          Especially important post-COVID. Guests expect them now.
+        </li>
+        <li>
+          <strong>Skipping the site visit</strong><br>
+          Let the rental company assess your location for access and placement.
+        </li>
+        <li>
+          <strong>Not scheduling mid-event service</strong><br>
+          Events over 6 hours or with 200+ guests need mid-event cleaning.
+        </li>
+      </ol>
+
+      <h2 id="checklist">Event Planning Checklist</h2>
+
+      <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 my-6">
+        <p class="font-semibold text-gray-900 mb-4">Before You Book:</p>
+        <ul class="space-y-2">
+          <li>☐ Calculate number of units needed</li>
+          <li>☐ Determine placement locations</li>
+          <li>☐ Check ADA requirements</li>
+          <li>☐ Get 3+ quotes from providers</li>
+          <li>☐ Ask about delivery/pickup times</li>
+          <li>☐ Confirm servicing schedule</li>
+          <li>☐ Verify insurance/damage policies</li>
+          <li>☐ Book hand-washing stations</li>
+        </ul>
+      </div>
+
+      <h2 id="costs">What to Budget</h2>
+
+      <p>For a typical 100-person, 4-hour event:</p>
+      <ul>
+        <li>2 standard units: $150-300</li>
+        <li>1 hand-washing station: $50-75</li>
+        <li>Delivery/pickup: Often included</li>
+        <li><strong>Total: $200-400</strong></li>
+      </ul>
+
+      <p>
+        For detailed pricing, check our <a href="/blog/porta-potty-rental-cost">complete porta potty cost guide</a>.
+      </p>
+
+      <h2 id="bottom-line">The Bottom Line</h2>
+
+      <p>
+        The key to porta potty success at your event: <strong>plan early, order enough, and place them strategically</strong>. Your guests won't remember the restrooms if they're done right—but they'll definitely remember if they're not.
+      </p>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 bg-gradient-to-br from-primary-50 to-blue-50 rounded-2xl p-8 text-center border border-primary-100">
+      <h3 class="text-2xl font-bold text-gray-900 mb-3">Planning an Event?</h3>
+      <p class="text-gray-600 mb-6">Find porta potty rental companies that serve your area</p>
+      <a href="/" class="inline-flex items-center bg-primary-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-700 transition-colors">
+        Search Providers Near You
+      </a>
+    </div>
+
+    <!-- Related -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-8">Related Articles</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {relatedPosts.map((related) => (
+          <a href={`/blog/${related.slug}`} class="bg-white rounded-xl p-6 border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-700">{related.category}</span>
+            <h3 class="text-lg font-semibold text-gray-900 mt-3 line-clamp-2">{related.title}</h3>
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</BaseLayout>
