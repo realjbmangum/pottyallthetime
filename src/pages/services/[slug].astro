@@ -1,0 +1,361 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SearchBar from '../../components/SearchBar.astro';
+import categories from '../../data/categories.json';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: category.name }
+];
+
+const icons: Record<string, string> = {
+  'hard-hat': '🏗️',
+  'calendar': '🎪',
+  'heart': '💒',
+  'alert': '🚨',
+  'clock': '⏰',
+  'star': '⭐',
+};
+
+// Service-specific content
+const serviceContent: Record<string, {
+  heroTitle: string;
+  heroDescription: string;
+  sections: { title: string; content: string }[];
+  faqs: { q: string; a: string }[];
+  tips: string[];
+}> = {
+  'construction': {
+    heroTitle: 'Porta Potty Rentals for Construction Sites',
+    heroDescription: 'Keep your job site OSHA compliant with reliable portable restroom solutions for workers and contractors.',
+    sections: [
+      {
+        title: 'Why Construction Sites Need Porta Potties',
+        content: 'OSHA regulations require employers to provide toilet facilities for workers. For construction sites, this typically means 1 toilet per 20 workers for a 40-hour work week. Portable restrooms are the practical solution for job sites without permanent facilities.'
+      },
+      {
+        title: 'OSHA Requirements',
+        content: 'According to OSHA Standard 1926.51, construction employers must provide: 1 toilet for 1-20 workers, 2 toilets for 20-35 workers, 3 toilets for 35-55 workers, 4 toilets for 55-80 workers, and 5 toilets for 80-110 workers. Failure to comply can result in significant fines.'
+      },
+      {
+        title: 'Types of Units for Construction',
+        content: 'Standard porta potties work well for most job sites. For larger projects, consider units with hand sanitizer stations or full hand-wash sinks. High-rise construction may require units that can be crane-lifted to upper floors.'
+      }
+    ],
+    faqs: [
+      { q: 'How often should construction site porta potties be serviced?', a: 'For active job sites, weekly service is standard. High-traffic sites with many workers may need twice-weekly or even daily service.' },
+      { q: 'Can porta potties be placed on uneven ground?', a: 'Yes, but the surface should be relatively level and stable. Rental companies can provide leveling blocks or platforms if needed.' },
+      { q: 'What about winter construction sites?', a: 'Porta potties can be used year-round. Providers can add antifreeze solutions to prevent freezing in cold weather.' }
+    ],
+    tips: [
+      'Place units at least 50 feet from eating areas',
+      'Ensure clear access for service trucks',
+      'Consider ADA-accessible units for compliance',
+      'Request more frequent service during hot weather'
+    ]
+  },
+  'events': {
+    heroTitle: 'Porta Potty Rentals for Events & Festivals',
+    heroDescription: 'From concerts to county fairs, ensure your guests have clean, accessible restroom facilities throughout your event.',
+    sections: [
+      {
+        title: 'Planning for Event Restrooms',
+        content: 'The general rule is 1 porta potty per 50 guests for events up to 4 hours. For longer events, plan for 1 unit per 35 guests. If alcohol is served, add 20% more units. Large festivals may need hundreds of units strategically placed throughout the venue.'
+      },
+      {
+        title: 'Types of Event Porta Potties',
+        content: 'Standard units work for casual outdoor events. For upscale gatherings, consider deluxe units with hand-wash stations or luxury restroom trailers. VIP areas often warrant separate, premium facilities.'
+      },
+      {
+        title: 'Placement Strategy',
+        content: 'Distribute units throughout the event space rather than clustering them in one area. Place them near high-traffic areas but away from food vendors and main stages. Ensure adequate lighting for evening events.'
+      }
+    ],
+    faqs: [
+      { q: 'How many porta potties do I need for my event?', a: 'Use this formula: (Number of guests ÷ 50) for events under 4 hours. Add 20% if serving alcohol. For a 500-person event with alcohol, you would need about 12 units.' },
+      { q: 'Can I get porta potties delivered the day of my event?', a: 'Most providers prefer delivery 1-2 days before to ensure proper setup. Same-day delivery may be possible but often costs extra.' },
+      { q: 'What if my event is multi-day?', a: 'For multi-day events, schedule daily servicing. This includes waste pump-out, restocking supplies, and sanitizing units.' }
+    ],
+    tips: [
+      'Book early during peak season (April-September)',
+      'Consider separate units for staff',
+      'Add hand-wash stations near food areas',
+      'Have signage directing guests to restroom locations'
+    ]
+  },
+  'weddings': {
+    heroTitle: 'Luxury Restroom Rentals for Weddings & Parties',
+    heroDescription: 'Elevate your special occasion with premium restroom trailers that match the elegance of your event.',
+    sections: [
+      {
+        title: 'Why Choose Luxury Trailers for Weddings',
+        content: 'Outdoor and tent weddings often lack permanent restroom facilities. Luxury restroom trailers provide a comfortable, climate-controlled experience with flushing toilets, running water, mirrors, and upscale finishes that complement your event aesthetic.'
+      },
+      {
+        title: 'Features of Wedding Restroom Trailers',
+        content: 'Premium trailers include separate men\'s and women\'s sides, air conditioning and heating, vanity mirrors with lighting, flushing porcelain toilets, running water sinks, and interior finishes ranging from rustic wood to modern elegance.'
+      },
+      {
+        title: 'Sizing for Your Guest Count',
+        content: 'A 2-station trailer works for up to 100 guests. For 100-175 guests, a 3-station trailer is recommended. Larger weddings of 175-300+ guests should consider 4-6 station trailers or multiple units.'
+      }
+    ],
+    faqs: [
+      { q: 'How much do wedding restroom trailers cost?', a: 'Luxury trailers typically range from $800-$2,500+ per day depending on size and amenities. This is a fraction of your overall wedding budget for a significant guest comfort upgrade.' },
+      { q: 'What utilities do restroom trailers need?', a: 'Most trailers need a standard electrical connection (110V outlet within 100 feet) and access to water. Some are fully self-contained with tanks.' },
+      { q: 'Can trailers be decorated to match my theme?', a: 'Many couples add floral arrangements, signage, or lighting around the trailer exterior. Some rental companies offer interior decor packages.' }
+    ],
+    tips: [
+      'Book 3-6 months in advance for popular dates',
+      'Request a site visit to plan placement and access',
+      'Ask about attendant service for the evening',
+      'Consider a separate unit for the bridal party'
+    ]
+  },
+  'emergency': {
+    heroTitle: 'Emergency Porta Potty Services',
+    heroDescription: 'Rapid deployment of portable sanitation for disaster relief, emergency shelters, and crisis situations.',
+    sections: [
+      {
+        title: 'When Emergency Services Are Needed',
+        content: 'Natural disasters, power outages, building evacuations, and community emergencies can create immediate needs for portable sanitation. Emergency porta potty services provide rapid response when permanent facilities are unavailable or overwhelmed.'
+      },
+      {
+        title: 'Response Times',
+        content: 'Many providers offer emergency response within 24-48 hours for urgent situations. For disaster relief, larger rental companies may deploy dozens or hundreds of units to affected areas within days.'
+      },
+      {
+        title: 'Working with Relief Organizations',
+        content: 'Emergency services often coordinate with FEMA, Red Cross, and local emergency management agencies. If you\'re organizing relief efforts, contact providers early and establish contracts before disasters strike.'
+      }
+    ],
+    faqs: [
+      { q: 'How quickly can emergency porta potties be delivered?', a: 'Most providers can deliver within 24-48 hours for emergencies. For large-scale disasters, deployment may take longer due to logistics and availability.' },
+      { q: 'Who pays for emergency sanitation services?', a: 'Depending on the situation, costs may be covered by FEMA, insurance, local government, or relief organizations. Private property owners typically bear their own costs.' },
+      { q: 'What about servicing during extended emergencies?', a: 'Providers establish regular service schedules even in disaster zones. Frequency depends on usage and site accessibility.' }
+    ],
+    tips: [
+      'Establish relationships with providers before emergencies',
+      'Include sanitation in emergency preparedness plans',
+      'Know your local emergency management contacts',
+      'Consider accessibility needs in placement'
+    ]
+  },
+  'long-term': {
+    heroTitle: 'Long-Term Porta Potty Rentals',
+    heroDescription: 'Cost-effective portable restroom solutions for extended projects, remote locations, and ongoing needs.',
+    sections: [
+      {
+        title: 'When Long-Term Rentals Make Sense',
+        content: 'Projects lasting several months, permanent outdoor workplaces, parks without facilities, agricultural operations, and remote locations all benefit from long-term porta potty rentals. Monthly rates offer significant savings over daily pricing.'
+      },
+      {
+        title: 'Monthly vs. Weekly Pricing',
+        content: 'Long-term rentals typically cost $150-$400 per month for standard units, compared to $75-$150 per day. The longer your rental period, the more you save per day. Most providers offer additional discounts for 6+ month commitments.'
+      },
+      {
+        title: 'Service Schedules',
+        content: 'Standard long-term rentals include weekly service (pumping, restocking, cleaning). You can adjust frequency based on usage—light use sites may need bi-weekly service, while busy sites may need twice-weekly visits.'
+      }
+    ],
+    faqs: [
+      { q: 'What\'s the minimum rental period for monthly rates?', a: 'Most providers require a minimum of 28 days or one calendar month for monthly pricing. Some offer weekly rates as a middle ground.' },
+      { q: 'Can I add or remove units during my rental?', a: 'Yes, most providers allow flexible scaling. Adding units is usually quick; removing them may require notice depending on your contract.' },
+      { q: 'What happens if a unit is damaged?', a: 'Report damage immediately. Normal wear is expected, but vandalism or misuse may result in repair charges. Ask about damage waivers or insurance options.' }
+    ],
+    tips: [
+      'Negotiate rates for 6+ month commitments',
+      'Request a service schedule that matches your usage',
+      'Consider deluxe units for permanent staff locations',
+      'Ask about seasonal rate adjustments'
+    ]
+  },
+  'luxury': {
+    heroTitle: 'Luxury Restroom Trailer Rentals',
+    heroDescription: 'Premium portable restrooms with climate control, running water, and upscale amenities for VIP experiences.',
+    sections: [
+      {
+        title: 'What Are Luxury Restroom Trailers?',
+        content: 'Luxury restroom trailers are mobile bathrooms that rival permanent facilities. They feature flushing toilets, running water sinks, climate control (AC/heat), interior lighting, mirrors, and high-end finishes. Some include music systems, artwork, and attendant stations.'
+      },
+      {
+        title: 'Types of Luxury Trailers',
+        content: 'Options range from 2-station compact trailers to 10+ station units for large events. Styles include modern/contemporary, rustic/farmhouse, and elegant/traditional. Some providers offer themed trailers for specific event types.'
+      },
+      {
+        title: 'Ideal Uses',
+        content: 'Luxury trailers are perfect for weddings, corporate events, film/TV productions, VIP areas at festivals, upscale private parties, and any occasion where guest comfort is paramount.'
+      }
+    ],
+    faqs: [
+      { q: 'How much do luxury trailers cost?', a: 'Expect $500-$1,500+ per day for standard luxury trailers. Ultra-premium units with extensive amenities can exceed $2,500 per day. Weekend packages may offer better value.' },
+      { q: 'What utilities are required?', a: 'Most trailers need a 110V or 220V electrical connection and water hookup. Self-contained units with freshwater tanks and generators are available for remote locations at higher cost.' },
+      { q: 'How much space do they need?', a: 'Typical trailers are 8-20 feet long and require a level surface accessible by truck. Allow extra space for steps and guest queuing.' }
+    ],
+    tips: [
+      'Book 2-4 months ahead for peak dates',
+      'Request photos of the specific trailer you\'ll receive',
+      'Ask about attendant service for guest assistance',
+      'Confirm delivery/pickup logistics and timing'
+    ]
+  }
+};
+
+const content = serviceContent[category.slug] || {
+  heroTitle: `${category.name} Porta Potty Services`,
+  heroDescription: category.description,
+  sections: [],
+  faqs: [],
+  tips: []
+};
+---
+
+<BaseLayout
+  title={`${category.name} | Porta Potty Rentals | Potty Directory`}
+  description={content.heroDescription}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Hero -->
+    <div class="bg-gradient-to-br from-primary-600 to-blue-700 rounded-2xl p-8 md:p-12 text-white mb-12">
+      <div class="flex items-start gap-6">
+        <span class="text-6xl">{icons[category.icon] || '🚽'}</span>
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">{content.heroTitle}</h1>
+          <p class="text-xl text-blue-100 max-w-3xl">{content.heroDescription}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search CTA -->
+    <div class="bg-gradient-to-r from-brand-50 to-emerald-50 rounded-xl border border-brand-200 p-6 mb-12 shadow-sm">
+      <div class="text-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-900">Find {category.name} Providers Near You</h2>
+        <p class="text-gray-600">Search our directory of verified porta potty rental companies</p>
+      </div>
+      <SearchBar placeholder="Enter your city or state..." class="max-w-xl mx-auto" />
+    </div>
+
+    <!-- Content Sections -->
+    {content.sections.length > 0 && (
+      <div class="space-y-8 mb-12">
+        {content.sections.map((section) => (
+          <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-3">{section.title}</h2>
+            <p class="text-gray-600 leading-relaxed">{section.content}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <!-- Two Column Layout: Tips + FAQs -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <!-- Tips -->
+      {content.tips.length > 0 && (
+        <div class="bg-green-50 rounded-xl border border-green-200 p-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+            <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Pro Tips
+          </h2>
+          <ul class="space-y-3">
+            {content.tips.map((tip) => (
+              <li class="flex items-start">
+                <span class="text-green-600 mr-2">•</span>
+                <span class="text-gray-700">{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <!-- Quick Stats/Info -->
+      <div class="bg-blue-50 rounded-xl border border-blue-200 p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+          <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Quick Info
+        </h2>
+        <div class="space-y-3 text-gray-700">
+          <p><strong>Service Type:</strong> {category.type === 'equipment' ? 'Equipment Rental' : 'Use Case'}</p>
+          <p><strong>Availability:</strong> Nationwide</p>
+          <p><strong>Booking:</strong> 1-4 weeks advance recommended</p>
+          <a href="/calculator" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium mt-2">
+            Calculate how many units you need
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQs -->
+    {content.faqs.length > 0 && (
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          {content.faqs.map((faq) => (
+            <details class="group bg-white rounded-xl border border-gray-200 overflow-hidden">
+              <summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-gray-50 transition-colors">
+                <h3 class="font-semibold text-gray-900 pr-4">{faq.q}</h3>
+                <span class="flex-shrink-0 ml-4 text-gray-400 group-open:rotate-180 transition-transform">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-5 text-gray-600 border-t border-gray-100 pt-4">
+                {faq.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Bottom CTA -->
+    <div class="bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl p-8 border border-primary-100">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Ready to Find a Provider?</h3>
+          <p class="text-gray-600">Browse our directory of trusted porta potty rental companies.</p>
+        </div>
+        <div class="flex gap-4">
+          <a
+            href="/states"
+            class="inline-flex items-center bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors"
+          >
+            Browse by State
+          </a>
+          <a
+            href="/pricing"
+            class="inline-flex items-center border-2 border-primary-600 text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-primary-50 transition-colors"
+          >
+            View Pricing Guide
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  details[open] summary {
+    background-color: #f9fafb;
+  }
+</style>

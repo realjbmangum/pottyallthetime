@@ -12,9 +12,21 @@ export interface Vendor {
   city: string;
   state: string;
   phone: string;
+  email?: string;
   website: string | null;
   services_offered: string[];
   slug: string;
+  latitude?: number;
+  longitude?: number;
+  street_address?: string;
+  postal_code?: string;
+  rating?: number;
+  review_count?: number;
+  photo_url?: string;
+  hours?: Record<string, string>;
+  linkedin?: string;
+  instagram?: string;
+  facebook?: string;
   created_at: string;
 }
 

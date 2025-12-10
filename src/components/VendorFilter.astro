@@ -1,0 +1,258 @@
+---
+interface Props {
+  totalCount: number;
+}
+
+const { totalCount } = Astro.props;
+---
+
+<div class="bg-gradient-to-r from-brand-50 to-emerald-50 rounded-xl border border-brand-200 p-4 mb-6 shadow-sm">
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <!-- Search + Results count -->
+    <div class="flex items-center gap-4">
+      <div class="relative">
+        <input
+          type="text"
+          id="vendor-search"
+          placeholder="Search providers..."
+          class="w-48 pl-9 pr-3 py-2 border-2 rounded-lg focus:ring-2 focus:outline-none text-sm bg-white shadow-md" style="border-color: oklch(26.6% 0.065 152.934); --tw-ring-color: oklch(26.6% 0.065 152.934);"
+        />
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <div class="text-gray-600 text-sm">
+        <span id="visible-count">{totalCount}</span> of <span>{totalCount}</span> providers
+      </div>
+    </div>
+
+    <!-- Filters and Sort -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <!-- Sort dropdown -->
+      <div class="relative">
+        <label for="sort-select" class="sr-only">Sort by</label>
+        <select
+          id="sort-select"
+          class="appearance-none bg-white border-2 text-gray-700 py-2 pl-4 pr-10 rounded-lg text-sm focus:ring-2 focus:outline-none cursor-pointer shadow-md" style="border-color: oklch(26.6% 0.065 152.934); --tw-ring-color: oklch(26.6% 0.065 152.934);"
+        >
+          <option value="name-asc">Name (A-Z)</option>
+          <option value="name-desc">Name (Z-A)</option>
+          <option value="rating-desc">Highest Rated</option>
+          <option value="rating-asc">Lowest Rated</option>
+          <option value="reviews-desc">Most Reviews</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Rating filter -->
+      <div class="relative">
+        <label for="rating-filter" class="sr-only">Minimum rating</label>
+        <select
+          id="rating-filter"
+          class="appearance-none bg-white border-2 text-gray-700 py-2 pl-4 pr-10 rounded-lg text-sm focus:ring-2 focus:outline-none cursor-pointer shadow-md" style="border-color: oklch(26.6% 0.065 152.934); --tw-ring-color: oklch(26.6% 0.065 152.934);"
+        >
+          <option value="0">Any Rating</option>
+          <option value="3">3+ Stars</option>
+          <option value="4">4+ Stars</option>
+          <option value="4.5">4.5+ Stars</option>
+          <option value="5">5 Stars Only</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Has Website filter -->
+      <label class="inline-flex items-center cursor-pointer bg-white border-2 rounded-lg px-4 py-2 shadow-md" style="border-color: oklch(26.6% 0.065 152.934);">
+        <input type="checkbox" id="website-filter" class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[--potty-green]" style="--tw-ring-color: oklch(26.6% 0.065 152.934); --potty-green: oklch(26.6% 0.065 152.934);"></div>
+        <span class="ms-2 text-sm text-gray-700">Has Website</span>
+      </label>
+
+      <!-- Open Now filter -->
+      <label class="inline-flex items-center cursor-pointer bg-white border-2 rounded-lg px-4 py-2 shadow-md" style="border-color: oklch(26.6% 0.065 152.934);">
+        <input type="checkbox" id="open-now-filter" class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[--potty-green]" style="--tw-ring-color: oklch(26.6% 0.065 152.934); --potty-green: oklch(26.6% 0.065 152.934);"></div>
+        <span class="ms-2 text-sm text-gray-700">Open Now</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Active filters display -->
+  <div id="active-filters" class="hidden mt-4 pt-4 border-t border-gray-200">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-sm text-gray-500">Active filters:</span>
+      <div id="filter-tags" class="flex gap-2 flex-wrap"></div>
+      <button id="clear-filters" class="text-sm text-primary-600 hover:text-primary-700 font-medium ml-2">
+        Clear all
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Get elements
+  const vendorSearch = document.getElementById('vendor-search') as HTMLInputElement;
+  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+  const ratingFilter = document.getElementById('rating-filter') as HTMLSelectElement;
+  const websiteFilter = document.getElementById('website-filter') as HTMLInputElement;
+  const openNowFilter = document.getElementById('open-now-filter') as HTMLInputElement;
+  const visibleCount = document.getElementById('visible-count');
+  const activeFiltersDiv = document.getElementById('active-filters');
+  const filterTagsDiv = document.getElementById('filter-tags');
+  const clearFiltersBtn = document.getElementById('clear-filters');
+  const vendorGrid = document.querySelector('[data-vendor-grid]');
+  const vendorCards = vendorGrid?.querySelectorAll('[data-vendor-card]');
+
+  if (!vendorCards) {
+    console.error('No vendor cards found');
+  }
+
+  function getVendorData(card: Element) {
+    return {
+      name: card.getAttribute('data-name') || '',
+      rating: parseFloat(card.getAttribute('data-rating') || '0'),
+      reviews: parseInt(card.getAttribute('data-reviews') || '0', 10),
+      hasWebsite: card.getAttribute('data-website') === 'true',
+      openNow: card.getAttribute('data-open-now') === 'true'
+    };
+  }
+
+  function updateFilters() {
+    if (!vendorCards || !vendorGrid) return;
+
+    const searchQuery = vendorSearch?.value?.toLowerCase() || '';
+    const sortValue = sortSelect?.value || 'name-asc';
+    const minRating = parseFloat(ratingFilter?.value || '0');
+    const requireWebsite = websiteFilter?.checked || false;
+    const requireOpenNow = openNowFilter?.checked || false;
+
+    // Convert NodeList to array for sorting
+    const cardsArray = Array.from(vendorCards);
+
+    // Filter
+    let visibleCards = 0;
+    cardsArray.forEach(card => {
+      const data = getVendorData(card);
+      const passesSearch = !searchQuery || data.name.toLowerCase().includes(searchQuery);
+      const passesRating = data.rating >= minRating || (minRating > 0 && data.rating === 0);
+      const passesWebsite = !requireWebsite || data.hasWebsite;
+      const passesOpenNow = !requireOpenNow || data.openNow;
+      const isVisible = passesSearch && passesRating && passesWebsite && passesOpenNow;
+
+      (card as HTMLElement).style.display = isVisible ? '' : 'none';
+      (card as HTMLElement).style.order = '0';
+      if (isVisible) visibleCards++;
+    });
+
+    // Sort visible cards
+    const sortedCards = cardsArray
+      .filter(card => (card as HTMLElement).style.display !== 'none')
+      .sort((a, b) => {
+        const dataA = getVendorData(a);
+        const dataB = getVendorData(b);
+
+        switch (sortValue) {
+          case 'name-asc':
+            return dataA.name.localeCompare(dataB.name);
+          case 'name-desc':
+            return dataB.name.localeCompare(dataA.name);
+          case 'rating-desc':
+            return dataB.rating - dataA.rating;
+          case 'rating-asc':
+            return dataA.rating - dataB.rating;
+          case 'reviews-desc':
+            return dataB.reviews - dataA.reviews;
+          default:
+            return 0;
+        }
+      });
+
+    // Apply sort order using CSS order
+    sortedCards.forEach((card, index) => {
+      (card as HTMLElement).style.order = String(index);
+    });
+
+    // Update count
+    if (visibleCount) {
+      visibleCount.textContent = String(visibleCards);
+    }
+
+    // Update active filters display
+    updateActiveFilters(minRating, requireWebsite, requireOpenNow, sortValue);
+  }
+
+  function updateActiveFilters(minRating: number, requireWebsite: boolean, requireOpenNow: boolean, sortValue: string) {
+    if (!activeFiltersDiv || !filterTagsDiv) return;
+
+    const hasFilters = minRating > 0 || requireWebsite || requireOpenNow;
+    activeFiltersDiv.classList.toggle('hidden', !hasFilters);
+
+    filterTagsDiv.innerHTML = '';
+
+    if (minRating > 0) {
+      const tag = createFilterTag(`${minRating}+ Stars`, () => {
+        ratingFilter.value = '0';
+        updateFilters();
+      });
+      filterTagsDiv.appendChild(tag);
+    }
+
+    if (requireWebsite) {
+      const tag = createFilterTag('Has Website', () => {
+        websiteFilter.checked = false;
+        updateFilters();
+      });
+      filterTagsDiv.appendChild(tag);
+    }
+
+    if (requireOpenNow) {
+      const tag = createFilterTag('Open Now', () => {
+        openNowFilter.checked = false;
+        updateFilters();
+      });
+      filterTagsDiv.appendChild(tag);
+    }
+  }
+
+  function createFilterTag(label: string, onRemove: () => void): HTMLElement {
+    const tag = document.createElement('span');
+    tag.className = 'inline-flex items-center gap-1 bg-primary-100 text-primary-700 text-sm px-3 py-1 rounded-full';
+    tag.innerHTML = `
+      ${label}
+      <button type="button" class="hover:text-primary-900">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    `;
+    tag.querySelector('button')?.addEventListener('click', onRemove);
+    return tag;
+  }
+
+  function clearAllFilters() {
+    if (vendorSearch) vendorSearch.value = '';
+    if (sortSelect) sortSelect.value = 'name-asc';
+    if (ratingFilter) ratingFilter.value = '0';
+    if (websiteFilter) websiteFilter.checked = false;
+    if (openNowFilter) openNowFilter.checked = false;
+    updateFilters();
+  }
+
+  // Event listeners
+  vendorSearch?.addEventListener('input', updateFilters);
+  sortSelect?.addEventListener('change', updateFilters);
+  ratingFilter?.addEventListener('change', updateFilters);
+  websiteFilter?.addEventListener('change', updateFilters);
+  openNowFilter?.addEventListener('change', updateFilters);
+  clearFiltersBtn?.addEventListener('click', clearAllFilters);
+
+  // Initial update
+  updateFilters();
+</script>

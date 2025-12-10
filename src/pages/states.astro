@@ -23,22 +23,190 @@ const statesWithCounts = states.map(state => ({
   description="Find portable restroom rental companies in all 50 states. Browse our directory to find trusted porta potty providers near you."
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="text-center mb-12">
+    <div class="text-center mb-8">
       <h1 class="text-4xl font-bold text-gray-900 mb-4">Browse by State</h1>
       <p class="text-xl text-gray-600 max-w-2xl mx-auto">
         Find porta potty rental companies in your state. Select a state below to view available providers.
       </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {statesWithCounts.map((state) => (
-        <StateCard
-          name={state.name}
-          abbr={state.abbr}
-          slug={state.slug}
-          count={state.count}
+    <!-- Filter/View Bar -->
+    <div class="bg-gradient-to-r from-brand-50 to-emerald-50 rounded-xl border border-brand-200 p-4 mb-8 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+      <!-- Search Filter -->
+      <div class="relative flex-1 min-w-[200px] max-w-md">
+        <input
+          type="text"
+          id="state-search"
+          placeholder="Filter states..."
+          class="w-full pl-10 pr-4 py-2 border-2 rounded-lg focus:ring-2 focus:outline-none text-sm bg-white shadow-md" style="border-color: oklch(26.6% 0.065 152.934); --tw-ring-color: oklch(26.6% 0.065 152.934);"
         />
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+
+      <!-- Sort & View Controls -->
+      <div class="flex items-center gap-4">
+        <!-- Sort Dropdown -->
+        <div class="flex items-center gap-2">
+          <label for="sort-select" class="text-sm text-gray-600 whitespace-nowrap">Sort by:</label>
+          <select
+            id="sort-select"
+            class="px-3 py-2 border-2 rounded-lg focus:ring-2 focus:outline-none text-sm bg-white shadow-md" style="border-color: oklch(26.6% 0.065 152.934); --tw-ring-color: oklch(26.6% 0.065 152.934);"
+          >
+            <option value="name">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="count">Most Providers</option>
+            <option value="count-asc">Fewest Providers</option>
+          </select>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="flex items-center border-2 rounded-lg overflow-hidden bg-white shadow-md" style="border-color: oklch(26.6% 0.065 152.934);">
+          <button
+            id="view-grid"
+            class="p-2 bg-primary-50 text-primary-600 border-r border-gray-300"
+            title="Grid view"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+          </button>
+          <button
+            id="view-list"
+            class="p-2 text-gray-400 hover:text-gray-600 bg-white"
+            title="List view"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Count -->
+    <p id="results-count" class="text-sm text-gray-600 mb-4">Showing all 50 states</p>
+
+    <!-- Grid View -->
+    <div id="states-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {statesWithCounts.map((state) => (
+        <div class="state-card" data-name={state.name.toLowerCase()} data-count={state.count}>
+          <StateCard
+            name={state.name}
+            abbr={state.abbr}
+            slug={state.slug}
+            count={state.count}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- List View (hidden by default) -->
+    <div id="states-list" class="hidden space-y-2">
+      {statesWithCounts.map((state) => (
+        <a
+          href={`/${state.slug}`}
+          class="state-list-item flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200 hover:border-primary-500 hover:shadow-md transition-all"
+          data-name={state.name.toLowerCase()}
+          data-count={state.count}
+        >
+          <div class="flex items-center gap-4">
+            <span class="text-2xl font-bold text-primary-600 w-12">{state.abbr}</span>
+            <span class="font-medium text-gray-900">{state.name}</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm text-gray-500">{state.count} provider{state.count !== 1 ? 's' : ''}</span>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
       ))}
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('state-search') as HTMLInputElement;
+  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+  const viewGridBtn = document.getElementById('view-grid') as HTMLButtonElement;
+  const viewListBtn = document.getElementById('view-list') as HTMLButtonElement;
+  const statesGrid = document.getElementById('states-grid') as HTMLDivElement;
+  const statesList = document.getElementById('states-list') as HTMLDivElement;
+  const resultsCount = document.getElementById('results-count') as HTMLParagraphElement;
+
+  const gridCards = Array.from(statesGrid.querySelectorAll('.state-card')) as HTMLElement[];
+  const listItems = Array.from(statesList.querySelectorAll('.state-list-item')) as HTMLElement[];
+
+  function updateResultsCount() {
+    const visibleCount = gridCards.filter(card => !card.classList.contains('hidden')).length;
+    resultsCount.textContent = visibleCount === 50
+      ? 'Showing all 50 states'
+      : `Showing ${visibleCount} of 50 states`;
+  }
+
+  // Filter by search
+  searchInput?.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+
+    gridCards.forEach(card => {
+      const name = card.dataset.name || '';
+      card.classList.toggle('hidden', !name.includes(query));
+    });
+
+    listItems.forEach(item => {
+      const name = item.dataset.name || '';
+      item.classList.toggle('hidden', !name.includes(query));
+    });
+
+    updateResultsCount();
+  });
+
+  // Sort
+  sortSelect?.addEventListener('change', () => {
+    const sortBy = sortSelect.value;
+
+    const sortFn = (a: HTMLElement, b: HTMLElement) => {
+      const nameA = a.dataset.name || '';
+      const nameB = b.dataset.name || '';
+      const countA = parseInt(a.dataset.count || '0');
+      const countB = parseInt(b.dataset.count || '0');
+
+      switch (sortBy) {
+        case 'name': return nameA.localeCompare(nameB);
+        case 'name-desc': return nameB.localeCompare(nameA);
+        case 'count': return countB - countA;
+        case 'count-asc': return countA - countB;
+        default: return 0;
+      }
+    };
+
+    // Sort grid
+    const sortedGrid = [...gridCards].sort(sortFn);
+    sortedGrid.forEach(card => statesGrid.appendChild(card));
+
+    // Sort list
+    const sortedList = [...listItems].sort(sortFn);
+    sortedList.forEach(item => statesList.appendChild(item));
+  });
+
+  // View toggle
+  viewGridBtn?.addEventListener('click', () => {
+    statesGrid.classList.remove('hidden');
+    statesList.classList.add('hidden');
+    viewGridBtn.classList.add('bg-primary-50', 'text-primary-600');
+    viewGridBtn.classList.remove('text-gray-400');
+    viewListBtn.classList.remove('bg-primary-50', 'text-primary-600');
+    viewListBtn.classList.add('text-gray-400');
+  });
+
+  viewListBtn?.addEventListener('click', () => {
+    statesList.classList.remove('hidden');
+    statesGrid.classList.add('hidden');
+    viewListBtn.classList.add('bg-primary-50', 'text-primary-600');
+    viewListBtn.classList.remove('text-gray-400');
+    viewGridBtn.classList.remove('bg-primary-50', 'text-primary-600');
+    viewGridBtn.classList.add('text-gray-400');
+  });
+</script>

@@ -7,26 +7,23 @@ import siteConfig from '../data/site-config.json';
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
       <a href="/" class="flex items-center space-x-2">
-        <span class="text-2xl">🚽</span>
-        <span class="text-xl font-bold text-primary-600">{siteConfig.name}</span>
+        <img src="/images/PottyDirectory_Logo.png" alt={siteConfig.name} class="h-12 w-auto" />
+        <span class="text-xl font-bold font-display tracking-wide" style="color: #138d57;">{siteConfig.name}</span>
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-6">
-        <a href="/" class="text-gray-600 hover:text-primary-600 transition-colors">
-          Home
-        </a>
         <a href="/states" class="text-gray-600 hover:text-primary-600 transition-colors">
-          Browse by State
+          Browse States
         </a>
-        <a href="/services" class="text-gray-600 hover:text-primary-600 transition-colors">
-          Services
+        <a href="/calculator" class="text-gray-600 hover:text-primary-600 transition-colors">
+          Calculator
         </a>
-        <a href="/about" class="text-gray-600 hover:text-primary-600 transition-colors">
-          About
+        <a href="/pricing" class="text-gray-600 hover:text-primary-600 transition-colors">
+          Pricing
         </a>
-        <a href="/contact" class="text-gray-600 hover:text-primary-600 transition-colors">
-          Contact
+        <a href="/faq" class="text-gray-600 hover:text-primary-600 transition-colors">
+          FAQ
         </a>
         <a
           href="/submit"
@@ -53,9 +50,10 @@ import siteConfig from '../data/site-config.json';
   <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
     <div class="px-4 py-4 space-y-3">
       <a href="/" class="block text-gray-600 hover:text-primary-600">Home</a>
-      <a href="/states" class="block text-gray-600 hover:text-primary-600">Browse by State</a>
-      <a href="/services" class="block text-gray-600 hover:text-primary-600">Services</a>
-      <a href="/about" class="block text-gray-600 hover:text-primary-600">About</a>
+      <a href="/states" class="block text-gray-600 hover:text-primary-600">Browse States</a>
+      <a href="/calculator" class="block text-gray-600 hover:text-primary-600">Calculator</a>
+      <a href="/pricing" class="block text-gray-600 hover:text-primary-600">Pricing</a>
+      <a href="/faq" class="block text-gray-600 hover:text-primary-600">FAQ</a>
       <a href="/contact" class="block text-gray-600 hover:text-primary-600">Contact</a>
       <a href="/submit" class="block bg-primary-600 text-white px-4 py-2 rounded-lg text-center">
         Add Your Business

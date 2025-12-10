@@ -166,6 +166,7 @@ import states from '../data/states.json';
 <script>
   const form = document.getElementById('submit-form') as HTMLFormElement;
   const messageDiv = document.getElementById('form-message') as HTMLDivElement;
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -180,11 +181,50 @@ import states from '../data/states.json';
       return;
     }
 
-    // For now, just show success message
-    // In production, you'd send to Supabase
-    messageDiv.textContent = 'Thank you! Your submission has been received and is pending review.';
-    messageDiv.className = 'text-center py-3 rounded-lg bg-green-100 text-green-700';
+    // Disable button while submitting
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    // Build email body
+    const data = {
+      access_key: 'b5f97214-832b-4657-93dc-72b24f45f64c',
+      subject: `New Listing Submission: ${formData.get('business_name')}`,
+      from_name: 'Potty Directory',
+      to: 'info@pottydirectory.com',
+      business_name: formData.get('business_name'),
+      contact_name: formData.get('contact_name') || 'Not provided',
+      contact_email: formData.get('contact_email'),
+      city: formData.get('city'),
+      state: formData.get('state'),
+      phone: formData.get('phone'),
+      website: formData.get('website') || 'Not provided',
+      services: services.join(', '),
+      description: formData.get('description') || 'Not provided'
+    };
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        messageDiv.textContent = 'Thank you! Your submission has been received. We\'ll review it and reach out soon.';
+        messageDiv.className = 'text-center py-3 rounded-lg bg-green-100 text-green-700';
+        form.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      messageDiv.textContent = 'Something went wrong. Please email us directly at info@pottydirectory.com';
+      messageDiv.className = 'text-center py-3 rounded-lg bg-red-100 text-red-700';
+    }
+
     messageDiv.classList.remove('hidden');
-    form.reset();
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Listing';
   });
 </script>
