@@ -1,0 +1,394 @@
+{
+  "specVersion": "1.0.0",
+  "name": "Directory Factory Question Research Workflow",
+  "description": "Automated workflow to scrape, process, and prioritize user questions for SEO content generation. This spec should be loaded by the scraper and used to drive all research activities.",
+
+  "workflow": {
+    "phases": [
+      "scrape",
+      "deduplicate",
+      "cluster",
+      "prioritize",
+      "generate_content_plan"
+    ],
+    "runBeforeSiteBuild": true
+  },
+
+  "sources": {
+    "reddit": {
+      "enabled": true,
+      "priority": 1,
+      "description": "Reddit is the gold standard for real user questions and pain points",
+      "searchPatterns": [
+        "{niche}",
+        "{niche} rental",
+        "{niche} cost",
+        "{niche} how many",
+        "{niche} wedding",
+        "{niche} construction",
+        "{niche} event",
+        "{niche} tips",
+        "{niche} smell",
+        "{niche} cleaning"
+      ],
+      "targetSubreddits": [
+        "weddingplanning",
+        "EventPlanning",
+        "Construction",
+        "HomeImprovement",
+        "OSHA",
+        "festivals",
+        "AskReddit",
+        "NoStupidQuestions"
+      ],
+      "questionIndicators": [
+        "?",
+        "how do",
+        "how many",
+        "how much",
+        "what is",
+        "what are",
+        "why do",
+        "why is",
+        "can I",
+        "can you",
+        "should I",
+        "is it",
+        "are there",
+        "do I need",
+        "does anyone know",
+        "has anyone",
+        "looking for advice",
+        "help me understand"
+      ],
+      "resultsPerQuery": 50,
+      "maxAgeMonths": 24
+    },
+
+    "quora": {
+      "enabled": true,
+      "priority": 2,
+      "description": "Quora has explicit Q&A format with diverse questions",
+      "searchPatterns": [
+        "{niche} rental",
+        "{niche} questions",
+        "portable toilet",
+        "portable restroom"
+      ],
+      "resultsPerQuery": 30
+    },
+
+    "googlePAA": {
+      "enabled": true,
+      "priority": 3,
+      "description": "Google People Also Ask boxes are SEO gold - these are what Google thinks users want answered",
+      "seedKeywords": [
+        "{niche} rental",
+        "{niche} cost",
+        "how many {niche}",
+        "{niche} for wedding",
+        "{niche} for construction",
+        "{niche} requirements"
+      ],
+      "expansionDepth": 3,
+      "questionsPerKeyword": 10
+    },
+
+    "weddingForums": {
+      "enabled": true,
+      "priority": 4,
+      "description": "Wedding planning forums for event-specific questions",
+      "sites": [
+        "weddingwire.com/wedding-forums",
+        "boards.weddingbee.com",
+        "theknot.com/community"
+      ],
+      "searchPatterns": [
+        "porta potty",
+        "portable restroom",
+        "bathroom rental",
+        "restroom trailer"
+      ]
+    },
+
+    "constructionForums": {
+      "enabled": true,
+      "priority": 5,
+      "description": "Construction and contractor forums for job site questions",
+      "sites": [
+        "contractortalk.com",
+        "forums.jlconline.com"
+      ],
+      "searchPatterns": [
+        "porta potty",
+        "portable toilet",
+        "OSHA bathroom"
+      ]
+    }
+  },
+
+  "processing": {
+    "deduplication": {
+      "enabled": true,
+      "method": "fuzzy",
+      "similarityThreshold": 0.85,
+      "description": "Remove near-duplicate questions using fuzzy string matching"
+    },
+
+    "clustering": {
+      "enabled": true,
+      "method": "keyword_intent",
+      "categories": [
+        {
+          "name": "cost_pricing",
+          "keywords": ["cost", "price", "expensive", "cheap", "how much", "afford", "budget", "fee"],
+          "contentType": "pricing_guide"
+        },
+        {
+          "name": "quantity_calculation",
+          "keywords": ["how many", "enough", "need", "per person", "ratio", "number"],
+          "contentType": "calculator"
+        },
+        {
+          "name": "how_it_works",
+          "keywords": ["how do", "how does", "work", "function", "mechanism", "inside"],
+          "contentType": "educational_blog"
+        },
+        {
+          "name": "sanitation_safety",
+          "keywords": ["clean", "sanitary", "safe", "disease", "germs", "bacteria", "smell", "odor"],
+          "contentType": "educational_blog"
+        },
+        {
+          "name": "regulations_compliance",
+          "keywords": ["OSHA", "requirement", "regulation", "law", "legal", "ADA", "code", "compliant"],
+          "contentType": "compliance_guide"
+        },
+        {
+          "name": "event_specific",
+          "keywords": ["wedding", "party", "festival", "event", "concert", "outdoor"],
+          "contentType": "event_guide"
+        },
+        {
+          "name": "construction_specific",
+          "keywords": ["construction", "job site", "contractor", "worker", "build"],
+          "contentType": "industry_guide"
+        },
+        {
+          "name": "comparison",
+          "keywords": ["vs", "versus", "better", "difference", "compare", "or"],
+          "contentType": "comparison_article"
+        },
+        {
+          "name": "tips_advice",
+          "keywords": ["tip", "advice", "recommend", "suggest", "best", "should"],
+          "contentType": "listicle"
+        },
+        {
+          "name": "troubleshooting",
+          "keywords": ["problem", "issue", "fix", "broken", "not working", "help"],
+          "contentType": "troubleshooting_guide"
+        }
+      ]
+    },
+
+    "prioritization": {
+      "enabled": true,
+      "scoring": {
+        "frequency": {
+          "weight": 0.35,
+          "description": "Questions asked more often score higher"
+        },
+        "recency": {
+          "weight": 0.15,
+          "description": "More recent questions score higher"
+        },
+        "engagementSignals": {
+          "weight": 0.20,
+          "description": "Upvotes, comments, answers indicate demand"
+        },
+        "competitorGap": {
+          "weight": 0.30,
+          "description": "Questions not well-answered by competitors score highest"
+        }
+      },
+      "minimumScore": 0.3
+    }
+  },
+
+  "output": {
+    "formats": {
+      "raw": {
+        "filename": "questions-raw.json",
+        "description": "All scraped questions before processing"
+      },
+      "processed": {
+        "filename": "questions-processed.json",
+        "description": "Deduplicated and clustered questions with scores"
+      },
+      "contentPlan": {
+        "filename": "content-plan.json",
+        "description": "Final prioritized content recommendations"
+      }
+    },
+
+    "contentPlanStructure": {
+      "faqQuestions": {
+        "count": 25,
+        "description": "Top questions for FAQ page with schema markup"
+      },
+      "blogTopics": {
+        "count": 15,
+        "description": "Questions that warrant full blog posts"
+      },
+      "calculatorIdeas": {
+        "count": 5,
+        "description": "Questions that could be answered with interactive tools"
+      },
+      "comparisonArticles": {
+        "count": 5,
+        "description": "Questions comparing options/alternatives"
+      }
+    }
+  },
+
+  "nicheDefaults": {
+    "portaPotty": {
+      "niche": "porta potty",
+      "aliases": ["portable toilet", "portable restroom", "porta john", "port-a-potty", "portaloo"],
+      "targetSubreddits": ["weddingplanning", "EventPlanning", "Construction", "HomeImprovement", "OSHA", "festivals"],
+      "seedKeywords": [
+        "porta potty rental",
+        "porta potty cost",
+        "how many porta potties",
+        "porta potty wedding",
+        "porta potty construction",
+        "portable toilet rental"
+      ]
+    }
+  },
+
+  "knownHighValueQuestions": {
+    "description": "Pre-identified questions from manual research that should always be included",
+    "questions": [
+      {
+        "question": "Can you poop in a porta potty?",
+        "category": "how_it_works",
+        "priority": "high",
+        "searchVolume": "high",
+        "currentlyCovered": false
+      },
+      {
+        "question": "How do porta potties work?",
+        "category": "how_it_works",
+        "priority": "high",
+        "searchVolume": "high",
+        "currentlyCovered": false
+      },
+      {
+        "question": "What is the blue liquid in porta potties?",
+        "category": "how_it_works",
+        "priority": "high",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      },
+      {
+        "question": "Where does porta potty waste go?",
+        "category": "how_it_works",
+        "priority": "high",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      },
+      {
+        "question": "Are porta potties sanitary?",
+        "category": "sanitation_safety",
+        "priority": "high",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      },
+      {
+        "question": "How to keep a porta potty from smelling?",
+        "category": "tips_advice",
+        "priority": "medium",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      },
+      {
+        "question": "How many porta potties do I need for 100 guests?",
+        "category": "quantity_calculation",
+        "priority": "high",
+        "searchVolume": "high",
+        "currentlyCovered": true
+      },
+      {
+        "question": "What are OSHA porta potty requirements?",
+        "category": "regulations_compliance",
+        "priority": "high",
+        "searchVolume": "medium",
+        "currentlyCovered": true
+      },
+      {
+        "question": "Porta potty vs restroom trailer for wedding?",
+        "category": "comparison",
+        "priority": "medium",
+        "searchVolume": "medium",
+        "currentlyCovered": true
+      },
+      {
+        "question": "Should I buy or rent a porta potty?",
+        "category": "comparison",
+        "priority": "medium",
+        "searchVolume": "low",
+        "currentlyCovered": false
+      },
+      {
+        "question": "Do porta potties work in cold weather?",
+        "category": "tips_advice",
+        "priority": "medium",
+        "searchVolume": "low",
+        "currentlyCovered": false
+      },
+      {
+        "question": "What ADA requirements apply to porta potties?",
+        "category": "regulations_compliance",
+        "priority": "medium",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      },
+      {
+        "question": "How often should a porta potty be serviced?",
+        "category": "tips_advice",
+        "priority": "medium",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      },
+      {
+        "question": "What questions should I ask before renting a porta potty?",
+        "category": "tips_advice",
+        "priority": "medium",
+        "searchVolume": "low",
+        "currentlyCovered": false
+      },
+      {
+        "question": "How much does porta potty delivery cost?",
+        "category": "cost_pricing",
+        "priority": "medium",
+        "searchVolume": "medium",
+        "currentlyCovered": false
+      }
+    ]
+  },
+
+  "integration": {
+    "directoryFactory": {
+      "phase": "pre-build",
+      "outputUsedBy": [
+        "faq-page-generator",
+        "blog-scaffolding",
+        "schema-markup-generator",
+        "calculator-requirements"
+      ],
+      "triggerCondition": "always_run_before_initial_build"
+    }
+  }
+}

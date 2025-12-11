@@ -2,7 +2,7 @@
 import siteConfig from '../data/site-config.json';
 ---
 
-<header class="bg-white shadow-sm sticky top-0 z-50">
+<header id="site-header" class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
@@ -67,6 +67,43 @@ import siteConfig from '../data/site-config.json';
 </header>
 
 <script>
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.getElementById('site-header');
+
+  menuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  // Add enhanced blur effect on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header?.classList.add('shadow-md', 'bg-white/90');
+      header?.classList.remove('shadow-sm', 'bg-white/95');
+    } else {
+      header?.classList.remove('shadow-md', 'bg-white/90');
+      header?.classList.add('shadow-sm', 'bg-white/95');
+    }
+  });
+</script>
+
+<script>
+  const header = document.getElementById('main-header');
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 10) {
+      header?.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-lg');
+    } else {
+      header?.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-lg');
+    }
+    
+    lastScrollY = currentScrollY;
+  });
+
+  // Mobile menu toggle (existing)
   const menuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
 
