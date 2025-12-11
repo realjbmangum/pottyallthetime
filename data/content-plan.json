@@ -1,0 +1,355 @@
+{
+  "generatedAt": "2025-12-11T21:09:25.673Z",
+  "niche": "porta potty",
+  "totalQuestionsAnalyzed": 172,
+  "faq": {
+    "description": "Top questions for FAQ page with schema markup",
+    "count": 25,
+    "questions": [
+      {
+        "question": "How do porta potties work?",
+        "category": "how_it_works",
+        "score": 0.79,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "What is the blue liquid in porta potties?",
+        "category": "how_it_works",
+        "score": 0.64,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Are porta potties sanitary?",
+        "category": "sanitation_safety",
+        "score": 0.64,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Porta Potty Logistics",
+        "category": "comparison",
+        "score": 0.5,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Creative as hell. Or, my bus.",
+        "category": "comparison",
+        "score": 0.5,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "The Perfect First Marathon! 3:04 Race Report",
+        "category": "comparison",
+        "score": 0.5,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Review: Surprised by Cirrus",
+        "category": "general",
+        "score": 0.5,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Is hygiene cultural in South Africa?",
+        "category": "general",
+        "score": 0.5,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "The blue splash",
+        "category": "general",
+        "score": 0.5,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "What is the “X” in the porta potty urinal?",
+        "category": "comparison",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "As a Philadelphia Phillies fan going to tonight's game, can I wear my Phillies jersey without fear of being jumped or pushed over in a porta potty?",
+        "category": "comparison",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Insomniac could never",
+        "category": "general",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Haunted Soiree 2025 - Just Say No",
+        "category": "general",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Parking at Parc Ferme for USGP - the full run down: Tips for attending USGP, info on staying with us, we've got RV spots, parking discount",
+        "category": "comparison",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Chicago Marathon 2025 - Race Report",
+        "category": "comparison",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "How to tell boyfriend his little guy smells really bad?",
+        "category": "sanitation_safety",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "If I offer my table partner a piece of gum would it be obvious what I'm hinting?",
+        "category": "general",
+        "score": 0.49,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Why does that porta potty have a camera?",
+        "category": "comparison",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Are porta potties intentionally being designed so your junk touches the front when sitting down?",
+        "category": "comparison",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "How to not have poop on your wrist for a week. Annual PSA's",
+        "category": "comparison",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Bat Bridge bathroom access",
+        "category": "general",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "VIP Tent at a Polo Match",
+        "category": "general",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "Bewildering schedule laid siege to the guests",
+        "category": "general",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "[US-CA] neighbor’s property construction crew set up in our yard. Wondering if this email to my landlord is appropriate.",
+        "category": "construction_specific",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      },
+      {
+        "question": "What happens when you have to throw up at a festival? Do you have to worry about getting kicked out?",
+        "category": "event_specific",
+        "score": 0.48,
+        "suggestedWordCount": 150
+      }
+    ]
+  },
+  "blog": {
+    "description": "Questions that warrant full blog posts",
+    "count": 15,
+    "topics": [
+      {
+        "title": "How do porta potties work",
+        "category": "how_it_works",
+        "score": 0.79,
+        "suggestedWordCount": 1500,
+        "contentType": "educational_blog"
+      },
+      {
+        "title": "What is the blue liquid in porta potties",
+        "category": "how_it_works",
+        "score": 0.64,
+        "suggestedWordCount": 1500,
+        "contentType": "educational_blog"
+      },
+      {
+        "title": "[US-CA] neighbor’s property construction crew set up in our yard. Wondering if this email to my landlord is appropriate.",
+        "category": "construction_specific",
+        "score": 0.48,
+        "suggestedWordCount": 1500,
+        "contentType": "industry_guide"
+      },
+      {
+        "title": "What happens when you have to throw up at a festival Do you have to worry about getting kicked out?",
+        "category": "event_specific",
+        "score": 0.48,
+        "suggestedWordCount": 1500,
+        "contentType": "event_guide"
+      },
+      {
+        "title": "can we talk about the post-party favor porta potty poo",
+        "category": "event_specific",
+        "score": 0.48,
+        "suggestedWordCount": 1500,
+        "contentType": "event_guide"
+      },
+      {
+        "title": "How do I let people in my marathon know I'm running slow because I ran an Ironman 3 weeks ago not because I'm a slow runner",
+        "category": "how_it_works",
+        "score": 0.48,
+        "suggestedWordCount": 1500,
+        "contentType": "educational_blog"
+      },
+      {
+        "title": "Parent In Laws to Be Don’t Want Guests Using the Bathroom",
+        "category": "regulations_compliance",
+        "score": 0.47,
+        "suggestedWordCount": 1500,
+        "contentType": "compliance_guide"
+      },
+      {
+        "title": "I can sum up what construction is after working in construction for two years.",
+        "category": "how_it_works",
+        "score": 0.47,
+        "suggestedWordCount": 1500,
+        "contentType": "educational_blog"
+      },
+      {
+        "title": "Porta Potty for backyard party",
+        "category": "event_specific",
+        "score": 0.46,
+        "suggestedWordCount": 1500,
+        "contentType": "event_guide"
+      },
+      {
+        "title": "AITA for calling off hosting SIL's wedding and breaking up with him over what he said about our own potential wedding",
+        "category": "event_specific",
+        "score": 0.45,
+        "suggestedWordCount": 1500,
+        "contentType": "event_guide"
+      },
+      {
+        "title": "How long could you survive in the building you're currently in",
+        "category": "construction_specific",
+        "score": 0.44,
+        "suggestedWordCount": 1500,
+        "contentType": "industry_guide"
+      },
+      {
+        "title": "What ADA requirements apply to porta potties",
+        "category": "regulations_compliance",
+        "score": 0.44,
+        "suggestedWordCount": 1500,
+        "contentType": "compliance_guide"
+      },
+      {
+        "title": "Has anyone ever renter a porta potty for a backyard event",
+        "category": "event_specific",
+        "score": 0.41,
+        "suggestedWordCount": 1500,
+        "contentType": "event_guide"
+      },
+      {
+        "title": "OP’s first concert, a Satrangi experience.",
+        "category": "event_specific",
+        "score": 0.38,
+        "suggestedWordCount": 1500,
+        "contentType": "event_guide"
+      },
+      {
+        "title": "Anyone have any experience with construction next to their home and dealing with it",
+        "category": "construction_specific",
+        "score": 0.38,
+        "suggestedWordCount": 1500,
+        "contentType": "industry_guide"
+      }
+    ]
+  },
+  "calculators": {
+    "description": "Questions that could be answered with interactive tools",
+    "count": 5,
+    "ideas": [
+      {
+        "question": "How many porta potties do I need for 100 guests?",
+        "toolType": "calculator",
+        "score": 0.49
+      },
+      {
+        "question": "Because obviously no one has ever needed to pee in the wintertime",
+        "toolType": "calculator",
+        "score": 0.43
+      },
+      {
+        "question": "What is the proper etiquette if a person needs to use your porta potty ",
+        "toolType": "calculator",
+        "score": 0.37
+      },
+      {
+        "question": "Porta Potty Considerations 💩",
+        "toolType": "calculator",
+        "score": 0.34
+      },
+      {
+        "question": "How many porta pottys do I need for my event?",
+        "toolType": "calculator",
+        "score": 0.29
+      }
+    ]
+  },
+  "comparisons": {
+    "description": "Questions comparing options/alternatives",
+    "count": 5,
+    "articles": [
+      {
+        "question": "Porta Potty Logistics",
+        "contentType": "comparison_article",
+        "score": 0.5,
+        "suggestedWordCount": 1200
+      },
+      {
+        "question": "Creative as hell. Or, my bus.",
+        "contentType": "comparison_article",
+        "score": 0.5,
+        "suggestedWordCount": 1200
+      },
+      {
+        "question": "The Perfect First Marathon! 3:04 Race Report",
+        "contentType": "comparison_article",
+        "score": 0.5,
+        "suggestedWordCount": 1200
+      },
+      {
+        "question": "What is the “X” in the porta potty urinal?",
+        "contentType": "comparison_article",
+        "score": 0.49,
+        "suggestedWordCount": 1200
+      },
+      {
+        "question": "As a Philadelphia Phillies fan going to tonight's game, can I wear my Phillies jersey without fear of being jumped or pushed over in a porta potty?",
+        "contentType": "comparison_article",
+        "score": 0.49,
+        "suggestedWordCount": 1200
+      }
+    ]
+  },
+  "summary": {
+    "contentGaps": 170,
+    "highPriorityTopics": 3,
+    "categoryBreakdown": {
+      "how_it_works": 11,
+      "sanitation_safety": 12,
+      "comparison": 58,
+      "general": 46,
+      "quantity_calculation": 11,
+      "construction_specific": 4,
+      "event_specific": 9,
+      "regulations_compliance": 5,
+      "cost_pricing": 10,
+      "tips_advice": 6
+    }
+  }
+}

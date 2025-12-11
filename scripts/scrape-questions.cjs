@@ -100,6 +100,57 @@ async function delay(ms) {
 // REDDIT SCRAPER
 // ============================================================================
 
+/**
+ * Check if a post title is actually relevant to the niche
+ * Filters out noise like video game references, jokes, etc.
+ */
+function isRelevantQuestion(title, selftext, niche) {
+  const fullText = `${title} ${selftext}`.toLowerCase();
+  const nicheTerms = niche.toLowerCase().split(' ');
+
+  // Must contain the niche term
+  const containsNiche = nicheTerms.every(term => fullText.includes(term)) ||
+    fullText.includes('portable toilet') ||
+    fullText.includes('portable restroom') ||
+    fullText.includes('porta john') ||
+    fullText.includes('port-a-potty');
+
+  if (!containsNiche) return false;
+
+  // Filter out irrelevant contexts (video games, jokes, memes)
+  const excludePatterns = [
+    /helldivers/i,
+    /video game/i,
+    /jackass/i,
+    /prank/i,
+    /meme/i,
+    /l4d/i,
+    /left 4 dead/i,
+    /game.*ranked/i,
+    /ranked.*game/i,
+    /slip it in/i,
+    /written on the wall/i,
+    /graffiti/i,
+    /funniest.*seen/i
+  ];
+
+  for (const pattern of excludePatterns) {
+    if (pattern.test(fullText)) return false;
+  }
+
+  // Boost relevance for rental/business-related questions
+  const relevanceTerms = [
+    'rent', 'rental', 'cost', 'price', 'how many', 'need', 'wedding',
+    'event', 'construction', 'osha', 'clean', 'service', 'delivery',
+    'work', 'smell', 'sanitary', 'require', 'regulation', 'ada',
+    'business', 'party', 'festival', 'backyard'
+  ];
+
+  const hasRelevanceTerm = relevanceTerms.some(term => fullText.includes(term));
+
+  return hasRelevanceTerm || title.includes('?');
+}
+
 async function scrapeReddit(spec, niche) {
   console.log('\n📱 Scraping Reddit...');
   const questions = [];
@@ -136,7 +187,8 @@ async function scrapeReddit(spec, niche) {
             fullText.includes(indicator.toLowerCase())
           );
 
-          if (isQuestion || title.includes('?')) {
+          // Must be a question AND relevant to the niche
+          if ((isQuestion || title.includes('?')) && isRelevantQuestion(title, selftext, niche)) {
             questions.push({
               source: 'reddit',
               subreddit: postData.subreddit,
@@ -174,13 +226,15 @@ async function scrapeReddit(spec, niche) {
         for (const post of data.data.children) {
           const postData = post.data;
           const title = postData.title || '';
+          const selftext = postData.selftext || '';
 
-          if (title.includes('?') || config.questionIndicators.some(i => title.toLowerCase().includes(i.toLowerCase()))) {
+          if ((title.includes('?') || config.questionIndicators.some(i => title.toLowerCase().includes(i.toLowerCase()))) &&
+              isRelevantQuestion(title, selftext, niche)) {
             questions.push({
               source: 'reddit',
               subreddit: postData.subreddit,
               question: title,
-              context: (postData.selftext || '').substring(0, 500),
+              context: selftext.substring(0, 500),
               url: `https://reddit.com${postData.permalink}`,
               score: postData.score || 0,
               numComments: postData.num_comments || 0,
