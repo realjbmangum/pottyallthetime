@@ -189,3 +189,26 @@ export async function sendContactMessage(message: Omit<ContactMessage, 'id' | 'c
   if (error) throw error;
   return data;
 }
+
+export async function getSiteStats() {
+  const { data, error, count } = await supabase
+    .from('vendors')
+    .select('state, rating', { count: 'exact' });
+
+  if (error) throw error;
+
+  // Count unique states
+  const uniqueStates = new Set(data?.map(v => v.state) || []);
+
+  // Calculate average rating (only vendors with ratings)
+  const ratingsData = data?.filter(v => v.rating && v.rating > 0) || [];
+  const avgRating = ratingsData.length > 0
+    ? ratingsData.reduce((sum, v) => sum + (v.rating || 0), 0) / ratingsData.length
+    : 0;
+
+  return {
+    providers: count || 0,
+    states: uniqueStates.size,
+    avgRating: avgRating.toFixed(1)
+  };
+}

@@ -8,16 +8,18 @@ import AdSlot from '../components/AdSlot.astro';
 import siteConfig from '../data/site-config.json';
 import states from '../data/states.json';
 import categories from '../data/categories.json';
-import { getFeaturedVendors, getVendorCountByState } from '../lib/supabase';
+import { getFeaturedVendors, getVendorCountByState, getSiteStats } from '../lib/supabase';
 import { citySlug } from '../lib/utils';
 
 // Get data
 let featuredVendors = [];
 let stateCounts: Record<string, number> = {};
+let siteStats = { providers: 0, states: 0, avgRating: '0' };
 
 try {
   featuredVendors = await getFeaturedVendors(6);
   stateCounts = await getVendorCountByState();
+  siteStats = await getSiteStats();
 } catch (error) {
   console.error('Error fetching data:', error);
 }
@@ -69,15 +71,15 @@ function getStateSlug(stateName: string) {
       <!-- Stats with glassmorphism -->
       <div class="flex justify-center gap-6 md:gap-12 mb-12">
         <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20">
-          <div class="text-3xl md:text-4xl font-bold">{siteConfig.stats.providers}</div>
+          <div class="text-3xl md:text-4xl font-bold">{siteStats.providers.toLocaleString()}</div>
           <div class="text-blue-200 text-sm">Verified Providers</div>
         </div>
         <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20">
-          <div class="text-3xl md:text-4xl font-bold">{siteConfig.stats.states}</div>
+          <div class="text-3xl md:text-4xl font-bold">{siteStats.states}</div>
           <div class="text-blue-200 text-sm">States Covered</div>
         </div>
         <div class="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20">
-          <div class="text-3xl md:text-4xl font-bold">{siteConfig.stats.rating}★</div>
+          <div class="text-3xl md:text-4xl font-bold">{siteStats.avgRating}★</div>
           <div class="text-blue-200 text-sm">Avg. Rating</div>
         </div>
       </div>
